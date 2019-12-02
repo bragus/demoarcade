@@ -1,0 +1,56 @@
+body {
+    display: grid;
+    grid-template-areas:'navbar'
+                        'header'  
+                        'main';
+    grid-template-columns: 100%;
+    background-image: url(Img_template/fundo.png);
+    background-size: cover;
+}
+
+nav {
+    grid-area: navbar; 
+    display: flex;
+    border-radius: 100%;
+    border-color: purple;
+    justify-content: space-between;
+    margin: 12px;
+    border: solid;
+    border-width: 100%;
+    border-radius: 3%;
+    border-color: rebeccapurple;
+   
+}
+
+.div_logo {
+    padding: 20px;
+}
+
+.div_icons {
+    display: flex;
+    flex-direction: row;
+    width: 20%;
+}
+
+.icon_home {
+    padding: 12px;
+    
+}
+
+.icon_sobre {
+    padding: 12px; 
+}
+
+.icon_comojogar {
+    padding: 12px; 
+}
+
+/* ========== HEADER INSTRUÇÕES =============== */
+
+.img_header {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-top: 50px;
+
+}
