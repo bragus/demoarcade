@@ -19,5 +19,5 @@ from webgame import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.Mostrar_game),
+    path('game/', views.Mostrar_game),
 ]
