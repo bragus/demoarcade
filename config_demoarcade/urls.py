@@ -15,10 +15,18 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+<<<<<<< HEAD
 from website import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.home),
     path('comojogar/', views.instrucoes),
+=======
+from webgame import views
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('', views.Mostrar_game),
+>>>>>>> 2a91d59849eb03f83837dee8838e2f54c7ec01b8
 ]

@@ -37,7 +37,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+<<<<<<< HEAD
     'website',
+=======
+>>>>>>> 2a91d59849eb03f83837dee8838e2f54c7ec01b8
     'webgame',
 ]
 
