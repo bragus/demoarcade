@@ -8,20 +8,22 @@
     <link rel="stylesheet" href="{% static 'style.css' %}">
     <script defer src="{% static 'scripts.js' %}"></script>
     <title>demoarcade</title>
+    <link href="{% static 'fonts/FSEX300.ttf' %}" rel="stylesheet">
+
 </head>
 <body>
     <nav>
         <div class ="div_logo">
 
-                <img src= {% static 'Img_template/demoarcade.png' %} width = "200px" alt="Demoarcade">
+                <img src= {% static 'Img_template/demoarcade.png' %} alt="Demoarcade">
 
         </div>
         
         <div class ="div_icons"> 
 
-        <a href="" class="icon_home"><img src={% static 'Img_template/homeicon.png' %} width = "48px" height=" 48px" alt="Ícone da home"></a>
-        <a href="" class="icon_sobre"><img src={% static 'Img_template/abouticon.png' %} width = "48px" height=" 48px" alt="Ícone do sobre"></a>
-        <a href="" class="icon_comojogar"><img src={% static 'Img_template/howtoplayicon.png' %} width = "48px" height=" 48px" alt="Ícone das instruções"></a> 
+            <a href="/" class="icon_home"><img src={% static 'Img_template/homeicon.png' %} alt="Ícone do sobre"></a>
+            <a href="#" class="icon_sobre"><img src={% static 'Img_template/abouticon.png' %} alt="Ícone do sobre"></a>
+            <a href="instrucoes" class="icon_comojogar"><img src={% static 'Img_template/howtoplayicon.png' %} alt="Ícone das instruções"></a> 
 
         </div>
 

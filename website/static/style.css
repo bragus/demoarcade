@@ -1,56 +1,96 @@
 body {
+    background-image: url(Img_template/fundo.png);
+    background-size: 100vw;
     display: grid;
+    font-family: 'Fixedsys Excelsior 3.01';
     grid-template-areas:'navbar'
                         'header'  
                         'main';
     grid-template-columns: 100%;
-    background-image: url(Img_template/fundo.png);
-    background-size: cover;
 }
 
 nav {
-    grid-area: navbar; 
+    align-items: center;
+    background-image: url(Img_template/fundo.png);
+    background-size: 100vw;
+    border: 0.2vw solid;
+    border-color: #7053c6;
+    border-radius: 5px;
     display: flex;
-    border-radius: 100%;
-    border-color: purple;
+    grid-area: navbar;
     justify-content: space-between;
-    margin: 12px;
-    border: solid;
-    border-width: 100%;
-    border-radius: 3%;
-    border-color: rebeccapurple;
-   
+    margin: 0;
+    position: fixed;
+    width: 96vw;
 }
 
-.div_logo {
-    padding: 20px;
+.div_logo{
+    align-items: center;
+    display: flex;
+}
+
+.div_logo img {
+    padding-left: 2vw;
+    width: 17vw;
 }
 
 .div_icons {
+    align-items: center;
     display: flex;
-    flex-direction: row;
-    width: 20%;
+    padding-right: 1.5vw;
+    padding-top: 0.5vh;
 }
 
-.icon_home {
-    padding: 12px;
-    
+.div_icons a img {
+    margin-right: 1vw;
+    width: 3vw;
 }
 
-.icon_sobre {
-    padding: 12px; 
-}
 
-.icon_comojogar {
-    padding: 12px; 
-}
 
 /* ========== HEADER INSTRUÇÕES =============== */
 
-.img_header {
+
+
+
+#comojogar{
     display: flex;
     justify-content: center;
-    width: 100%;
-    margin-top: 50px;
+    margin-top: 15vh;
 
+}
+
+#comojogar img{
+    width: 20vw;
+}
+
+.textodir{
+    align-items: center;
+    display: flex;
+    justify-content: space-around;
+}
+
+.textodir p{
+    color: white;
+    font-size: 2.5vw;
+}
+
+.textodir img{
+    width: 12vw;
+}
+
+.textoesq{
+    align-items: center;
+    display: flex;
+    justify-content: space-around;
+}
+
+.textoesq p{
+    color: white;
+    font-size: 2.5vw;
+    text-align: right;
+}
+
+.textoesq img{
+    width: 25vw;
 }

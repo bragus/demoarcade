@@ -4,16 +4,33 @@
 {% block content %}
 
 <head>
-    <div class="img_header"> 
+    <div id="comojogar"> 
         <img src={% static 'Img_template/comojogar.png' %} alt="Como jogar">
-
+        
     </div>
     
     
 </head>
+<section class="textodir">
+    <p>Controle <br> a nave <br> utilizando o mouse ou <br> tocando na tela</p>
+    <img src={% static 'Img_template/navecomcursor.png' %} alt="nave com cursor">
+</section> 
 
+<section class="textoesq">
+    <img src={% static 'Img_template/gameplay.png' %} alt="imagem do gameplay do jogo">
+    <p>Desvie dos <br> meteoritos e <br> atire nos <br> inimigos que <br> surgirão</p>
+</section>
 
-
+<section class="textodir">
+    <p>A cada rodada <br> o jogador possui <br> 3 corações de vida. <br> O jogador perde <br> meio coração a cada <br> dano sofrido.</p>
+    <img src={% static 'Img_template/coracoes.png' %} alt="pontos de vida do jogador">
+</section>
+    
+<section class="textoesq">
+    <img src={% static 'Img_template/score.png' %} alt="top pontuação dos jogadores">
+    <p>Pontue o maximo <br> que conseguir <br> e garanta <br> seu nickname <br> no top 10
+    </p>
+</section>
 
 
 
