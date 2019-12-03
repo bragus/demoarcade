@@ -6,24 +6,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="{% static 'style.css' %}">
-    <script defer src="{% static 'scripts.js' %}"></script>
     <title>demoarcade</title>
     <link href="{% static 'fonts/FSEX300.ttf' %}" rel="stylesheet">
+    <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js" ></script>
+    <script defer src="{% static 'scripts.js' %}"></script>
 
 </head>
 <body>
     <nav>
         <div class ="div_logo">
 
-                <img src= {% static 'Img_template/demoarcade.png' %} alt="Demoarcade">
+            <img src= {% static 'Img_template/demoarcade.png' %} alt="Demoarcade">
 
         </div>
         
         <div class ="div_icons"> 
 
-            <a href="/" class="icon_home"><img src={% static 'Img_template/homeicon.png' %} alt="Ícone do sobre"></a>
-            <a href="#" class="icon_sobre"><img src={% static 'Img_template/abouticon.png' %} alt="Ícone do sobre"></a>
-            <a href="instrucoes" class="icon_comojogar"><img src={% static 'Img_template/howtoplayicon.png' %} alt="Ícone das instruções"></a> 
+            <a href="/" class="icon_home"><img src={% static 'Img_template/homeicon.png' %} title="Ícone para voltar a página inicial"></a>
+            <a href="#" class="icon_sobre"><img src={% static 'Img_template/abouticon.png' %} title="Ícone do sobre"></a>
+            <a href="/instrucoes" class="icon_comojogar"><img src={% static 'Img_template/howtoplayicon.png' %} title="Ícone das instruções"></a> 
 
         </div>
 
