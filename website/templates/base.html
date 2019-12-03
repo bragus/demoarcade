@@ -1,0 +1,39 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <script defer src="{% static 'scripts.js' %}"></script>
+    <title>demoarcade</title>
+    <link href="{% static 'fonts/FSEX300.ttf' %}" rel="stylesheet">
+
+</head>
+<body>
+    <nav>
+        <div class ="div_logo">
+
+                <img src= {% static 'Img_template/demoarcade.png' %} alt="Demoarcade">
+
+        </div>
+        
+        <div class ="div_icons"> 
+
+            <a href="/" class="icon_home"><img src={% static 'Img_template/homeicon.png' %} alt="Ícone do sobre"></a>
+            <a href="#" class="icon_sobre"><img src={% static 'Img_template/abouticon.png' %} alt="Ícone do sobre"></a>
+            <a href="instrucoes" class="icon_comojogar"><img src={% static 'Img_template/howtoplayicon.png' %} alt="Ícone das instruções"></a> 
+
+        </div>
+
+
+
+    </nav>
+
+    {% block content %}
+
+    {% endblock %}
+    
+</body>
+</html>
