@@ -49,6 +49,21 @@ nav {
     width: 3vw;
 }
 
+#icon_home:hover{
+    filter: brightness(150%) saturate(130%);
+    transition: all 150ms linear;
+}
+
+#icon_sobre:hover{
+    filter: brightness(150%) saturate(130%);
+    transition: all 150ms linear;
+}
+
+#icon_comojogar:hover{
+    filter: brightness(150%) saturate(130%);
+    transition: all 150ms linear;
+}
+
 
 /* ========== HOME =============== */
 .home{
@@ -75,37 +90,77 @@ nav {
 
 }
 
-.home_icons img{
 
+
+.home_icons img{
     margin-top: 3vw;
     width: 3vw;
-
 }
+
 
 #mostrar_play{
-    display: flex;
-    justify-content: center;
-    display:none;
-    font-size: 1.2vw;
     color: white;
-    text-decoration: none;
-    font-style: bold;
+    font-size: 1.2vw;
+    justify-content: center;
+    opacity: 0;
 }
+
 
 #mostrar_about{
-    display: flex;
-    justify-content: center;
-    display:none;
-    font-size: 1.2vw;
     color: white;
+    font-size: 1.2vw;
+    justify-content: center;
+    opacity: 0;
 }
 
+
 #mostrar_help{
-    display: flex;
-    justify-content: center;
-    display:none;
-    font-size: 1.2vw;
     color: white;
+    font-size: 1.2vw;
+    justify-content: center;
+    opacity: 0;
+}
+
+
+#home_icon_play:hover{
+    filter: brightness(150%) saturate(130%);
+    transition: all 150ms linear;
+}
+
+#home_icon_play:hover #mostrar_play{
+    opacity: 100;
+    transition: all 150ms linear;
+}
+
+
+
+#home_icon_about:hover{
+    filter: brightness(150%) saturate(130%);
+    transition: all 150ms linear;
+}
+
+#home_icon_about:hover #mostrar_about{
+    opacity: 100;
+    transition: all 150ms linear;
+}
+
+#home_icon_help:hover{
+    filter: brightness(150%) saturate(130%);
+    transition: all 150ms linear;
+}
+
+#home_icon_help:hover #mostrar_help{
+    opacity: 100;
+    transition: all 150ms linear;
+}
+
+.score{
+    display: flex;
+    border: 0.2vw solid;
+    border-color: #7053c6;
+    border-radius: 5px;
+    width: 20vw;
+    height: 10vh;
 }
 
 
