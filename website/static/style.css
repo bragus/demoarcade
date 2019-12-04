@@ -156,15 +156,45 @@ nav {
 
 .score{
     display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.score section{
+    align-items: center;
     border: 0.2vw solid;
     border-color: #7053c6;
     border-radius: 5px;
-    width: 20vw;
-    height: 10vh;
+    color: white;
+    display: grid;
+    justify-content: center;
+    width: 25vw;
 }
 
+.score section h2{
+    font-size: 1.9vw;
+    text-align: center;
+}
 
+.score section p{
+    font-size: 1.9vw;
+    text-align: left;
+}
 
+#ranking{
+    display: flex;
+    justify-content: center;
+}
+
+#ranking img{
+    margin-bottom: 2vh;
+    width: 8vw;
+}
+
+#ranking img:hover{
+    filter: brightness(150%) saturate(130%);
+    transition: all 150ms linear;
+}
 /* ========== INSTRUÇÕES =============== */
 
 
@@ -172,7 +202,6 @@ nav {
     display: flex;
     justify-content: center;
     margin-top: 15vh;
-
 }
 
 #comojogar img{
