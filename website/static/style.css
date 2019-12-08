@@ -181,6 +181,15 @@ nav {
     text-align: left;
 }
 
+.highScores {
+	position: center;
+	bottom: 35px;
+	right: 0px;
+	line-height: 10px;
+    font-size: 14px;
+    text-align: center;
+ }
+
 #ranking{
     display: flex;
     justify-content: center;
@@ -238,3 +247,5 @@ nav {
 .textoesq img{
     width: 25vw;
 }
+
+
