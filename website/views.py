@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from .forms import dados_do_jogadorForm
 
 # Create your views here.
 
@@ -13,3 +14,6 @@ def Mostrar_instrucoes (request):
 
 def Mostrar_ranking (request):
     return render (request, 'ranking.html')
+
+def dados_do_jogador_new (request):
+    return render (request, 'website/dados_do_jogador_edit.html', {'form':form})

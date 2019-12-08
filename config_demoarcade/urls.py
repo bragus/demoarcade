@@ -25,5 +25,5 @@ urlpatterns = [
     path('game/', views_game.Mostrar_game),
     path('ranking/', views_site.Mostrar_ranking),
     path('sobre/', views_site.Mostrar_sobre),
-
+    path('dados_do_jogador/new/', views.dados_do_jogador_new),
 ]
