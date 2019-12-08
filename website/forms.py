@@ -1,7 +1,9 @@
 from django import forms
-from .models import dados_do_jogador
+from .models import *
 
-class dados_do_jogadorForm (forms.ModelForm):
+class dados_do_jogadorForm(forms.ModelForm):
+
+    senha = forms.CharField(widget = forms.PasswordInput)
 
     class Meta:
         model = dados_do_jogador
@@ -9,6 +11,5 @@ class dados_do_jogadorForm (forms.ModelForm):
             'nickname',
             'email',
         ]
-        widgets = [
-            'senha': forms.PasswordInput(),
-        ]
+        
+            

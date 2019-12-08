@@ -1,0 +1,9 @@
+{% extends 'website/base.html' %}
+<!--estilizar pagina de cadastro-->
+{% block content %}
+<h2>Novo Jogador</h2>
+<form method ="POST" class="dados_do_jogador-form">{% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="botao salvar">Salvar Partida</button>
+</form>
+{% endblock %}
