@@ -23,5 +23,6 @@ urlpatterns = [
     path('', views_site.Mostrar_home),
     path('instrucoes/', views_site.Mostrar_instrucoes),
     path('game/', views_game.Mostrar_game),
-
+    path('ranking/', views_site.Mostrar_ranking),
+    path('sobre/', views_site.Mostrar_sobre),
 ]

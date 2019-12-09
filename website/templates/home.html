@@ -1,6 +1,47 @@
-{% extends 'base.html' %}
 {% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link rel="shortcut icon" href="{% static 'Img_template/favicon.ico' %}"/>
+    <title>Demoarcade</title>
+    <link href="{% static 'fonts/FSEX300.ttf' %}" rel="stylesheet">
+    <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js" ></script>
+    <script defer src="{% static 'scripts.js' %}"></script>
 
-{% block content %}
 
-{% endblock %}
+
+</head>
+<body>
+        <section class="home">
+            <div id="logohome"> 
+                <img src={% static 'Img_template/demoarcade.png' %} alt="demoarcade"></body>
+            </div> 
+            <div class ="home_icons"> 
+                <a href="/" id="home_icon_play"><img src={% static 'Img_template/playicon.png' %} title= "Clique aqui para jogar">
+                <p id="mostrar_play">jogar</p>
+                </a>
+
+                <a href="/sobre" id="home_icon_about"><img src={% static 'Img_template/abouticon.png' %} alt="Ícone do sobre">
+                <p id="mostrar_about">sobre</p>
+                </a>
+                <a href="/instrucoes" id="home_icon_help"><img src={% static 'Img_template/howtoplayicon.png' %} alt="Ícone das instruções">
+                <p id="mostrar_help">ajuda</p></a> 
+                </div>
+        </section>
+
+        <div class="score">
+            <section> 
+
+                <h2>TESTE RANKING</h2>
+                
+                <div class="highScores"></div>
+                <div id="highScores"></div>
+
+                    <a href="/ranking" id="ranking"><img src={% static 'Img_template/ranking.png' %} alt="Botão de ranking"></a>
+            </section>
+        </div>
+</html>

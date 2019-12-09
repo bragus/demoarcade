@@ -1,3 +1,6 @@
+
+/* ========== BASE =============== */
+
 body {
     background-image: url(Img_template/fundo.png);
     background-size: 100vw;
@@ -46,18 +49,177 @@ nav {
     width: 3vw;
 }
 
+#icon_home:hover{
+    filter: brightness(150%) saturate(130%);
+    transition: all 150ms linear;
+}
+
+#icon_sobre:hover{
+    filter: brightness(150%) saturate(130%);
+    transition: all 150ms linear;
+}
+
+#icon_comojogar:hover{
+    filter: brightness(150%) saturate(130%);
+    transition: all 150ms linear;
+}
 
 
-/* ========== HEADER INSTRUÇÕES =============== */
+/* ========== HOME =============== */
+.home{
+    display: grid;
+    justify-content: center;
+}
 
 
+#logohome{
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+
+#logohome img{
+    width: 40vw;
+}
+
+.home_icons{
+    align-items: top;
+    display: flex;
+    justify-content: space-evenly;
+    text-decoration: none;
+
+}
+
+
+
+.home_icons img{
+    margin-top: 3vw;
+    width: 3vw;
+}
+
+
+#mostrar_play{
+    color: white;
+    font-size: 1.2vw;
+    justify-content: center;
+    opacity: 0;
+}
+
+
+#mostrar_about{
+    color: white;
+    font-size: 1.2vw;
+    justify-content: center;
+    opacity: 0;
+}
+
+
+#mostrar_help{
+    color: white;
+    font-size: 1.2vw;
+    justify-content: center;
+    opacity: 0;
+}
+
+
+#home_icon_play:hover{
+    filter: brightness(150%) saturate(130%);
+    transition: all 150ms linear;
+}
+
+#home_icon_play:hover #mostrar_play{
+    opacity: 100;
+    transition: all 150ms linear;
+}
+
+
+
+#home_icon_about:hover{
+    filter: brightness(150%) saturate(130%);
+    transition: all 150ms linear;
+}
+
+#home_icon_about:hover #mostrar_about{
+    opacity: 100;
+    transition: all 150ms linear;
+}
+
+#home_icon_help:hover{
+    filter: brightness(150%) saturate(130%);
+    transition: all 150ms linear;
+}
+
+#home_icon_help:hover #mostrar_help{
+    opacity: 100;
+    transition: all 150ms linear;
+}
+
+.score{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.score section{
+    align-items: center;
+    border: 0.2vw solid;
+    border-color: #7053c6;
+    border-radius: 5px;
+    color: white;
+    display: grid;
+    justify-content: center;
+    width: 25vw;
+}
+
+.score section h2{
+    font-size: 1.9vw;
+    text-align: center;
+}
+
+.score section p{
+    font-size: 1.9vw;
+    text-align: left;
+}
+
+.highScores {
+	position: center;
+	bottom: 35px;
+	right: 0px;
+	line-height: 10px;
+    font-size: 14px;
+    text-align: center;
+ }
+
+ .highScoresRank {
+	position: center;
+	bottom: 35px;
+	right: 0px;
+	line-height: 10px;
+    font-size: 14px;
+    text-align: center;
+ }
+
+#ranking{
+    display: flex;
+    justify-content: center;
+}
+
+#ranking img{
+    margin-bottom: 2vh;
+    width: 8vw;
+}
+
+#ranking img:hover{
+    filter: brightness(150%) saturate(130%);
+    transition: all 150ms linear;
+}
+/* ========== INSTRUÇÕES =============== */
 
 
 #comojogar{
     display: flex;
     justify-content: center;
     margin-top: 15vh;
-
 }
 
 #comojogar img{
@@ -67,7 +229,7 @@ nav {
 .textodir{
     align-items: center;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-evenly;
 }
 
 .textodir p{
@@ -82,7 +244,7 @@ nav {
 .textoesq{
     align-items: center;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-evenly;
 }
 
 .textoesq p{
@@ -94,3 +256,5 @@ nav {
 .textoesq img{
     width: 25vw;
 }
+
+
