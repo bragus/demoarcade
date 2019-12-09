@@ -190,6 +190,15 @@ nav {
     text-align: center;
  }
 
+ .highScoresRank {
+	position: center;
+	bottom: 35px;
+	right: 0px;
+	line-height: 10px;
+    font-size: 14px;
+    text-align: center;
+ }
+
 #ranking{
     display: flex;
     justify-content: center;
