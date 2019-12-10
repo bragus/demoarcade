@@ -57,6 +57,8 @@ player = {
     vida: 0,
     velocidade: 6,
     velocidade_x: 0,
+    tempo_bonus: 0,
+    bonus_ativo: false,
 
     start : function(){
 
@@ -158,7 +160,23 @@ player = {
             alert("Perdeu");
         }        
 
-    }
+    },
+
+    bonus : function(tipo){
+
+        if(tipo == 1){
+            
+            this.vida = this.vida + 2;
+            if(this.vida > 6)
+                this.vida = 6;
+            
+            vida.adicionar_vida();
+            
+        }
+        else{
+            alert("Ganhou tiros");
+        }
+    },
 };
 
 
@@ -176,7 +194,7 @@ C_Tiros = { //controlador de tiros do player
         let x = player.x + player.largura/2;
         let y = player.y + player.altura/2;
         let largura = 40;
-        let altura = 20;
+        let altura = 30;
         let img = new Image();
         img.src = url_tiro_player;
         let sprite = new Sprite(img, x, y, largura, altura);
@@ -222,6 +240,44 @@ C_Tiros = { //controlador de tiros do player
             obj_tiro.sprite.desenhar();
         }
 
+    }
+
+};
+
+C_Explosao = {
+
+    listEx: [],
+
+    insere : function(x, y){
+
+        let largura = 20;
+        let altura = 20;
+        let img = new Image();
+        img.src = url_explosao;
+        let sprite = new Sprite(img, x, y, largura, altura);
+
+        this.listEx.push({
+            x: x,
+            y: y,
+            largura: largura,
+            altura: altura,
+            sprite: sprite,
+        });
+
+    },
+
+    update : function(){
+
+
+    },
+
+    desenhar : function(){
+
+        for(let i = 0; i < this.listTiros.length; i++){
+
+            let obj_tiro = this.listTiros[i];            
+            obj_tiro.sprite.desenhar();
+        }
     }
 
 };
@@ -282,7 +338,7 @@ C_Asteroides = {
             vel_y: velocidade_y,
             rotacao: rotacao,
             sprite: sprite,
-            vida: 3,
+            vida: 5,
         });
 
         score.adicionar_pontuacao(1);
@@ -485,10 +541,10 @@ class Inimigo{
         this.y = y;
         this.x_objetivo;
         this.y_objetivo;
-        this.altura = 40;
-        this.largura = 40;
+        this.altura = 50;
+        this.largura = 50;
         this.cor = "#fff";
-        this.imagem = null;   
+        this.sprite = null;   
         this.vida = 10;
         this.velocidade = 4;
         this.c_tiros = null;
@@ -496,12 +552,27 @@ class Inimigo{
 
     start(pos_tela) {
         
+        let img = new Image();
+        let tipo_inimigo = Math.floor(3 * Math.random());
+
+        if(tipo_inimigo == 1){
+            img.src = url_inimigo1;
+        }
+        else if(tipo_inimigo == 2){
+            img.src = url_inimigo2;
+        }
+        else{
+            img.src = url_inimigo3;
+        }
+        
+        this.sprite = new Sprite(img, this.x, this.y, this.largura, this.altura);
+        
         let x_objetivo = Math.floor(canvas_largura * Math.random());
         let y_objetivo = Math.floor(canvas_altura * Math.random());
 
         this.atualizar_posicao(x_objetivo, y_objetivo);
         this.c_tiros = new Tiros_inimigo();
-
+       
     }
 
     atualizar_posicao(x, y){
@@ -554,13 +625,13 @@ class Inimigo{
         }      
         
         this.c_tiros.update(this.x, (this.y + this.altura/2));
+        this.sprite.atualizar_posicao(this.x, this.y);
         
     }
 
     desenhar(){
 
-        ctx.fillStyle = this.cor;
-        ctx.fillRect(this.x, this.y, this.altura, this.largura);
+        this.sprite.desenhar();
         this.c_tiros.desenhar();
 
     }
@@ -572,23 +643,29 @@ class Tiros_inimigo{
     constructor(){
         this.x = 0;
         this.y = 0;
-        this.largura = 15;
-        this.altura = 4;
+        this.largura = 40;
+        this.altura = 30;
         this.listTiros = [];
         this.cores = ["#ffbc1c", "#ff1c1c", "#ff85e1"];
         this.tempo_inserir = 100;
         this.config_tempo_inserir = 60;
         this.velocidade_tiro = 10;
         this.atirar = true;
+       
     }
 
     insere(){
+
+        let img = new Image();
+        img.src = url_tiro_inimigo;
+        let sprite = new Sprite(img, this.x, this.y, this.largura, this.altura);
+
         this.listTiros.push({
             x: this.x,
             y: this.y,
             largura: this.largura,
             altura: this.altura,
-            cor: this.cores[Math.floor(3*Math.random())],
+            sprite: sprite,
         });
         this.tempo_inserir = this.config_tempo_inserir;
 
@@ -611,6 +688,7 @@ class Tiros_inimigo{
         for(let i = 0; i < this.listTiros.length; i++){
             let obj_tiro = this.listTiros[i];
             obj_tiro.x -= this.velocidade_tiro;
+            obj_tiro.sprite.atualizar_posicao(obj_tiro.x, obj_tiro.y);
 
             if(detectar_colisao(obj_tiro, player)){ // detecta colisão de inimigos com o player
              
@@ -628,8 +706,7 @@ class Tiros_inimigo{
 
         for(let i = 0; i < this.listTiros.length; i++){
             let obj_tiro = this.listTiros[i];
-            ctx.fillStyle = obj_tiro.cor;
-            ctx.fillRect(obj_tiro.x, obj_tiro.y, obj_tiro.largura, obj_tiro.altura);
+            obj_tiro.sprite.desenhar();
         }
 
     }
@@ -664,7 +741,7 @@ score = {
     desenhar : function(){
 
         ctx.fillStyle = this.cor;
-        ctx.font = "50px Arial";
+        ctx.font = "30px 'Press Start 2P'";
         ctx.fillText(this.valorScore, this.x, this.y);
 
     },
@@ -738,7 +815,110 @@ vida = {
         }
     },
 
-}
+    adicionar_vida : function(){
+
+        for(let i = 0; i < 3; i++){
+
+            if(this.list_status_sprite[i] != 1){
+
+                if(this.list_status_sprite[i] == 2){
+                    
+                    this.list_status_sprite[i] = 1;
+                    let img = new Image();
+                    img.src = url_coracao1;
+                    let sprite = new Sprite(img, this.list_sprite[i].x, this.list_sprite[i].y, this.list_sprite[i].largura, this.list_sprite[i].altura);
+                    this.list_sprite[i] = sprite;
+
+                    if(i + 1 < 3){
+                        this.list_status_sprite[i+1] = 2;
+                        let img = new Image();
+                        img.src = url_coracao2;
+                        let sprite = new Sprite(img, this.list_sprite[i+1].x, this.list_sprite[i+1].y, this.list_sprite[i+1].largura, this.list_sprite[i+1].altura);
+                        this.list_sprite[i+1] = sprite;
+                    }
+                }
+                else{
+                    this.list_status_sprite[i] = 1;
+                    let img = new Image();
+                    img.src = url_coracao1;
+                    let sprite = new Sprite(img, this.list_sprite[i].x, this.list_sprite[i].y, this.list_sprite[i].largura, this.list_sprite[i].altura);
+                    this.list_sprite[i] = sprite;
+                }
+
+                break;
+            }
+        }
+
+    },
+
+};
+
+
+C_Itens = {
+
+    x: 0,
+    y: 0,
+    altura: 50,
+    largura: 50,
+    sprite: null,
+    config_tempo_inserir: 400,
+    tempo_inserir: 200,
+    tipo_bonus: 0,
+    velocidade: 15,
+
+    insere : function(){
+
+        this.x = canvas_largura;
+        this.y = Math.floor(canvas_altura * Math.random());
+
+        let img = new Image();
+        this.tipo_bonus = Math.floor(3 * Math.random());
+        this.tipo_bonus = 1;
+
+        if(this.tipo_bonus == 1){ // vida
+            img.src = url_coracao_power;
+        }
+        else{ //  tiro X
+            img.src = url_tiro_power;
+        }        
+        this.sprite = new Sprite(img, this.x, this.y, this.largura, this.altura);
+
+        this.tempo_inserir = this.config_tempo_inserir;
+    },
+
+    update : function(){
+        
+        if(this.tempo_inserir <= 0){
+            this.insere();
+        }
+        else{
+            this.tempo_inserir--;
+        }
+
+        if(this.sprite != null){
+            this.x -= this.velocidade;
+            this.sprite.atualizar_posicao(this.x, this.y);
+        }
+
+                    
+        if(detectar_colisao(this, player)){ // detecta colisão com o player
+
+            this.sprite = null;
+            this.x = -10;
+            player.bonus(this.tipo_bonus);
+
+        }
+    },
+
+    desenhar : function(){
+
+        if(this.sprite != null)
+            this.sprite.desenhar();
+
+    },
+
+};
+
 
 function detectar_colisao(obj1, obj2){
 
@@ -865,6 +1045,7 @@ function atualizar_acoes(){ //Atualizar as mudanças de informações de cada ob
     C_Tiros.update();
     C_Asteroides.update();
     C_Inimigos.update();
+    C_Itens.update();
 
 }
 
@@ -879,6 +1060,7 @@ function desenhar(){ //Responsavel por chamar as funções que redesenham as inf
     player.desenhar();
     score.desenhar();
     vida.desenhar();
+    C_Itens.desenhar();
 
 }
 
