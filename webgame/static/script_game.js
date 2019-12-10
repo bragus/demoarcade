@@ -604,10 +604,13 @@ vida = {
     altura: 10,
     largura: 10,
     list_Img: [],
+    img: null,
 
     start : function(){
         this.x = 20;
         this.y = 20;
+        img = new Image();
+        img.src = "";
     },
 
     update : function(){
@@ -649,7 +652,7 @@ function validar_pos_tela(obj){
 
 }
 
-function Sprite(x, y, largura, altura) {
+function Sprite(image, x, y, largura, altura) {
     
     this.x = x;
     this.y = y;
