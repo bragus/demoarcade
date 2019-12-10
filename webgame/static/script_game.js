@@ -1,6 +1,6 @@
 
 let inicio_canvas_x, inicio_canvas_y, canvas_altura, canvas_largura;
-let canvas, ctx;
+let canvas, ctx, escala_jogo, end_game;
 
 game = {
 
@@ -10,8 +10,14 @@ game = {
         redimencionarJanela();
         canvas.style.border = "1px solid #000";
         ctx = canvas.getContext("2d");
+        escala_jogo = Math.max(Math.floor(canvas_largura / 1000), Math.floor(canvas_altura / 1000));
+        end_game = false;
 
     },
+
+    endGame : function(){
+        end_game = true;
+    }
 }
 
 fundo = {
@@ -73,6 +79,10 @@ player = {
     bonus_ativo: false,
 
     start : function(){
+        
+        this.largura = this.largura * escala_jogo;
+        this.altura = this.altura * escala_jogo;
+        alert(this.largura);
 
         this.y = canvas_altura/2;
         this.vida = 6;
@@ -175,7 +185,7 @@ player = {
         this.vida--;
         vida.remover_vida();
         if(this.vida <= 0){ // perdeu o game
-            alert("Perdeu");
+            game.endGame();
         }        
 
     },
@@ -213,8 +223,8 @@ C_Tiros = { //controlador de tiros do player
 
         let x = player.x + player.largura/2;
         let y = player.y + player.altura/2;
-        let largura = 40;
-        let altura = 30;
+        let largura = 20;
+        let altura = 5;
         let img = new Image();
         img.src = url_tiro_player;
         let sprite = new Sprite(img, x, y, largura, altura);
@@ -1076,16 +1086,16 @@ function main(){ //Inicializa o jogo
 
 
 function update(){ //Função chamada a cada frame do jogo
-    
-    atualizar_acoes();
-    desenhar();
+    if(end_game != true){
+        atualizar_acoes();
+        desenhar();
+    }
 
     window.requestAnimationFrame(update);
 }
 
 function atualizar_acoes(){ //Atualizar as mudanças de informações de cada objeto
-    
-    //let rect = canvas.getBoundingClientRect();
+
     fundo.update();
     player.update();
     C_Tiros.update();
@@ -1096,7 +1106,7 @@ function atualizar_acoes(){ //Atualizar as mudanças de informações de cada ob
 }
 
 function desenhar(){ //Responsavel por chamar as funções que redesenham as informações atualizadas na tela
-    ctx.fillStyle = "#000";
+    ctx.clearRect(0, 0, canvas_largura, canvas_altura);    
     ctx.fillRect(0, 0, canvas_largura, canvas_altura);
 
     fundo.desenhar();
