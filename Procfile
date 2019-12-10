@@ -1,1 +1,1 @@
-web: gunicorn demoarcade.wsgi
+web: gunicorn config_demoarcade.wsgi
