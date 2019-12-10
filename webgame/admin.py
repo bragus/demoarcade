@@ -1,5 +1,5 @@
 from django.contrib import admin
-from website.models import *
+from webgame.models import jogador
 
 # Register your models here.
-admin.site.register (jogador),
+admin.site.register(jogador)
