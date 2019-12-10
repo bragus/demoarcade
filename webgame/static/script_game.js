@@ -605,12 +605,14 @@ vida = {
     largura: 10,
     list_Img: [],
     img: null,
+    sprite: null,
 
     start : function(){
         this.x = 20;
         this.y = 20;
-        img = new Image();
-        img.src = "";
+        this.img = new Image();
+        this.img.src = "";
+        this.sprite = new Sprite(this.img, this.x, this.y, this.largura, this.altura);
     },
 
     update : function(){
@@ -621,7 +623,7 @@ vida = {
 
     desenhar : function(){
 
-        
+        sprite.desenhar();
 
     },
 
