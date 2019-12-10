@@ -21,7 +21,7 @@
                 <img src={% static 'Img_template/demoarcade.png' %} alt="demoarcade"></body>
             </div> 
             <div class ="home_icons"> 
-                <a href="/" id="home_icon_play"><img src={% static 'Img_template/playicon.png' %} title= "Clique aqui para jogar">
+                <a href="/game" id="home_icon_play"><img src={% static 'Img_template/playicon.png' %} title= "Clique aqui para jogar">
                 <p id="mostrar_play">jogar</p>
                 </a>
 
@@ -33,10 +33,35 @@
                 </div>
         </section>
 
+        <div class="cadastro">
+
+            <p>Faça seu cadastro!</p>
+         </div>
+
+         <div class="form">
+            {% if formulary %}
+            <form method="POST">
+            {% csrf_token %}
+            {{formulary}}
+            <div id="button">
+                <button>
+                    <img src={% static 'Img_template/enviar.png' %}>
+                </button>
+                
+            </div>
+            </form>
+            {% endif %}
+            {% if msg %}
+            <h2>{{msg}}</h2>
+            {% endif %}
+        </div>
+
+        
+
+
+
         <div class="score">
             <section> 
-
-                <h2>TESTE RANKING</h2>
                 
                 <div class="highScores"></div>
                 <div id="highScores"></div>

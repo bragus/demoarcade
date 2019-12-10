@@ -25,6 +25,5 @@ urlpatterns = [
     path('game/', views_game.Mostrar_game),
     path('ranking/', views_site.Mostrar_ranking),
     path('sobre/', views_site.Mostrar_sobre),
-    path('cadastro/', views_site.cadastro_player)
 
 ]
