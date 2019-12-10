@@ -170,16 +170,23 @@ C_Tiros = { //controlador de tiros do player
     config_tempo_inserir: 10,
     velocidade_tiro: 10,
     atirar: false,
-    sprite: null,   
-
 
     insere: function(){
+
+        let x = player.x + player.largura/2;
+        let y = player.y + player.altura/2;
+        let largura = 40;
+        let altura = 20;
+        let img = new Image();
+        img.src = url_tiro_player;
+        let sprite = new Sprite(img, x, y, largura, altura);
+
         this.listTiros.push({
-            x: player.x + player.largura/2,
-            y: player.y + player.altura/2,
-            largura: 40,
-            altura: 20,
-            sprite: null, 
+            x: x,
+            y: y,
+            largura: largura,
+            altura: altura,
+            sprite: sprite, 
         });
 
         this.tempo_inserir = this.config_tempo_inserir;
@@ -201,6 +208,7 @@ C_Tiros = { //controlador de tiros do player
 
             let obj_tiro = this.listTiros[i];
             obj_tiro.x += this.velocidade_tiro;
+            obj_tiro.sprite.atualizar_posicao(obj_tiro.x, obj_tiro.y);
 
         }
 
@@ -210,11 +218,8 @@ C_Tiros = { //controlador de tiros do player
 
         for(let i = 0; i < this.listTiros.length; i++){
 
-            let obj_tiro = this.listTiros[i];
-            let img = new Image();
-            img.src = url_tiro_player;
-            this.sprite = new Sprite(img, obj_tiro.x, obj_tiro.y, obj_tiro.largura, obj_tiro.altura);
-            this.sprite.desenhar();
+            let obj_tiro = this.listTiros[i];            
+            obj_tiro.sprite.desenhar();
         }
 
     }
@@ -224,7 +229,6 @@ C_Tiros = { //controlador de tiros do player
 C_Asteroides = {
 
     listAst: [],
-    cores: ["#ffbc1c", "#ff1c1c", "#ff85e1"],
     pos_y: [1, 2, 3], //1 = asteroide vindo de cima para baixo, 2 = vindo do meio, 3 = de baixo para cima
     tempo_inserir: 30,
     config_tempo_inserir: 10,
@@ -262,15 +266,22 @@ C_Asteroides = {
             velocidade_y = - (2 + Math.floor(4 * Math.random()));
         }
 
+        let largura = 30;
+        let altura = 60;
+        let rotacao = calcular_rotacao(pos_x, pos_y, pos_x + velocidade_x, pos_y + velocidade_y);
+        let img = new Image();
+        img.src = url_meteoro;
+        let sprite = new Sprite(img, pos_x, pos_y, largura, altura);
+
         this.listAst.push({
             x: pos_x,
             y: pos_y,
-            largura: 30,
-            altura: 30,
+            largura: largura,
+            altura: altura,
             vel_x: velocidade_x,
             vel_y: velocidade_y,
-
-            cor: this.cores[Math.floor(3*Math.random())],
+            rotacao: rotacao,
+            sprite: sprite,
             vida: 3,
         });
 
@@ -305,12 +316,9 @@ C_Asteroides = {
                                                 
                         this.listAst.splice(i, 1); //Remove os itens dentro do intervalo, coloque 1 se for apenas um item
                         i--;
-                        this.destruir(obj_ast, true);
-                                         
+                        this.destruir(obj_ast, true);                                         
                     }
-
                 }
-
             }
             
             if(detectar_colisao(obj_ast, player)){ // detecta colisão de asteroides com o player
@@ -331,6 +339,8 @@ C_Asteroides = {
             obj_ast.x += obj_ast.vel_x;
             obj_ast.y += obj_ast.vel_y;
 
+            obj_ast.sprite.atualizar_posicao(obj_ast.x, obj_ast.y);
+
         }
 
     },
@@ -340,9 +350,15 @@ C_Asteroides = {
         for(let i = 0; i < this.listAst.length; i++){
 
             let obj_ast = this.listAst[i];
-            ctx.fillStyle = obj_ast.cor;
-            ctx.fillRect(obj_ast.x, obj_ast.y, obj_ast.largura, obj_ast.altura);
 
+            ctx.save(); // sava o contexto antes de transladar
+
+            ctx.translate(obj_ast.x + obj_ast.largura/2, obj_ast.y + obj_ast.altura/2);//transladar ctx para o alvo
+            ctx.rotate(obj_ast.rotacao); 
+            obj_ast.sprite.desenhar_rotacionado();
+
+            ctx.restore(); // retorna o contexto para o estado salvo inicialmente
+            
         }
 
     },
@@ -744,6 +760,17 @@ function validar_pos_tela(obj){
 
 }
 
+function calcular_rotacao(x_atual, y_atual, x_objetivo, y_objetivo){
+
+    let cat_adj = x_objetivo - x_atual;
+    let cat_oposto = y_objetivo - y_atual;
+
+    let tan = cat_oposto/cat_adj;
+    let angle = Math.atan(tan) + (Math.PI / 2);
+    return angle;    
+
+}
+
 function Sprite(image, x, y, largura, altura) {
     
     this.x = x;
@@ -753,6 +780,10 @@ function Sprite(image, x, y, largura, altura) {
 
     this.desenhar = function(){
         ctx.drawImage(image, this.x, this.y, this.largura, this.altura);
+    }
+
+    this.desenhar_rotacionado = function(){
+        ctx.drawImage(image, -(this.largura/2), -(this.altura/2), this.largura, this.altura);
     }
 
     this.atualizar_posicao = function(xCanvas, yCanvas){
@@ -809,7 +840,6 @@ function main(){ //Inicializa o jogo
     window.addEventListener("mousemove", getMousePos);
 
     // fundo.start();
-
     fundo.start();
     player.start();
     score.start();
