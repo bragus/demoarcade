@@ -5,50 +5,11 @@ let canvas, ctx;
 game = {
 
     start : function(){
-        let vertical = false;
 
-        if(window.innerWidth <= 800){
-            canvas_altura = window.innerWidth - 20;
-            canvas_largura = window.innerHeight - 20;
-            vertical = true;
-        }
-        else{
-            canvas_altura = window.innerHeight - 20;
-            canvas_largura = window.innerWidth - 20;
-
-        }
-
-        // if(tela_largura/tela_altura != 1,77){
-        //     tela_largura = tela_altura * 1,77;
-        // }
-
-        
-
-        if(vertical){
-            canvas = document.createElement("canvas");
-        
-            canvas.height = canvas_largura;
-            canvas.width = canvas_altura;
-            canvas.style.border = "1px solid #000";
-
-            ctx = canvas.getContext("2d");
-            // ctx.save(); // sava o contexto antes de transladar
-
-            //ctx.translate(canvas_altura, canvas_largura);//transladar ctx para o alvo
-            ctx.rotate((Math.PI / 180) * 270); 
-            // obj_ast.sprite.desenhar_rotacionado();
-
-            // ctx.restore();
-        }
-        else{
-            canvas = document.createElement("canvas");
-        
-            canvas.height = canvas_altura;
-            canvas.width = canvas_largura;
-            canvas.style.border = "1px solid #000";
-    
-            ctx = canvas.getContext("2d");
-        }
+        canvas = document.createElement("canvas");
+        redimencionarJanela();
+        canvas.style.border = "1px solid #000";
+        ctx = canvas.getContext("2d");
 
     },
 }
@@ -1103,6 +1064,7 @@ function main(){ //Inicializa o jogo
     document.addEventListener("touchstart", click);
     document.addEventListener("touchend", clickEnd);
     window.addEventListener("mousemove", getMousePos);
+    window.addEventListener("resize", redimencionarJanela);
 
     fundo.start();
     player.start();
@@ -1167,6 +1129,15 @@ function clickEnd(evento){
 
 }
 
+function redimencionarJanela(){
+
+    canvas_altura = window.innerHeight;
+    canvas_largura = window.innerWidth;
+
+    canvas.width = canvas_largura;
+    canvas.height = canvas_altura;
+
+}
 
 // function Sprite(imagem, largura, altura){
 
