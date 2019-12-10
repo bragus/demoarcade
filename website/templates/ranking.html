@@ -2,9 +2,13 @@
 {% load static %}
 
 {% block content %}
+<head>
+    <script defer src="{% static 'java.js' %}"></script>
+</head>
 
-<div class="highScores"></div>
-<div id="highScores"></div>
-
+<div id="#RankingPage">
+    <div class="highScoresRank"></div>
+    <div id="highScoresRank"></div>
+</div>
     
 {% endblock %} 
