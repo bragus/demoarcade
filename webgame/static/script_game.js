@@ -165,7 +165,7 @@ C_Asteroides = {
     cores: ["#ffbc1c", "#ff1c1c", "#ff85e1"],
     pos_y: [1, 2, 3], //1 = asteroide vindo de cima para baixo, 2 = vindo do meio, 3 = de baixo para cima
     tempo_inserir: 30,
-    config_tempo_inserir: 20,
+    config_tempo_inserir: 10,
 
     insere: function(){
 
@@ -212,9 +212,9 @@ C_Asteroides = {
             vida: 3,
         });
 
-        score.adicionar_pontuacao(5);
+        score.adicionar_pontuacao(1);
 
-        this.tempo_inserir = this.config_tempo_inserir;
+        this.tempo_inserir = this.config_tempo_inserir + Math.floor(20 * Math.random());
     },
 
 
@@ -243,7 +243,7 @@ C_Asteroides = {
                                                 
                         this.listAst.splice(i, 1); //Remove os itens dentro do intervalo, coloque 1 se for apenas um item
                         i--;
-                        this.destruir(obj_ast, false);
+                        this.destruir(obj_ast, true);
                                          
                     }
 
@@ -255,9 +255,15 @@ C_Asteroides = {
              
                 this.listAst.splice(i, 1); 
                 i--;
-                this.destruir(obj_ast, true);
+                this.destruir(obj_ast, false);
                 player.atingido();
 
+            }
+
+            if(validar_pos_tela(obj_ast)){
+                this.listAst.splice(i, 1); 
+                i--;
+                this.destruir(obj_ast, false);
             }
 
             obj_ast.x += obj_ast.vel_x;
@@ -279,14 +285,283 @@ C_Asteroides = {
 
     },
 
-    destruir: function(ast, atingiu_player){
+    destruir: function(ast, pontuacao){
 
-        if(!atingiu_player)
-            score.adicionar_pontuacao(50);
+        if(pontuacao)
+            score.adicionar_pontuacao(20);
 
     },
 
 };
+
+C_Inimigos = {
+
+    listNav: [],
+    pos_tela: [1, 2, 3], //1 = nav vindo de cima para baixo, 2 = vindo do meio, 3 = de baixo para cima
+    tempo_inserir: 100,
+    config_tempo_inserir: 100,
+
+    insere: function(){
+
+        pos_tela = this.pos_tela[Math.floor(3*Math.random())];
+        pos_y = 0;
+        pos_x = 0;
+        
+        if(pos_tela == 1){ // vindo de cima
+            pos_y = 0;
+            pos_x = canvas_largura/1.5 + Math.floor((canvas_largura/2.5) * Math.random());
+           
+        }
+        else if (pos_tela == 2){ // vindo do centro
+            pos_y = Math.floor(canvas_altura * Math.random());
+            pos_x = canvas_largura;
+
+        }
+        else{ // vindo de baixo
+            pos_y = canvas_altura;
+            pos_x = canvas_largura/1.5 + Math.floor((canvas_largura/2.5) * Math.random());
+
+        }
+
+        obj_inimigo = new Inimigo(pos_x, pos_y);
+        obj_inimigo.start(pos_tela);
+        this.listNav.push(obj_inimigo);
+        this.tempo_inserir = this.config_tempo_inserir +  Math.floor(this.config_tempo_inserir * Math.random());
+
+    },
+
+
+    update: function(){
+
+        if(this.tempo_inserir <= 0){
+            this.insere();
+        }
+        else{
+            this.tempo_inserir--;
+        }
+
+        for(let i = 0; i < this.listNav.length; i++){
+
+            let obj_nav = this.listNav[i];
+
+            for(let c = 0; c < C_Tiros.listTiros.length; c++){
+
+                let obj_tiro = C_Tiros.listTiros[c];
+
+                if(detectar_colisao(obj_nav, obj_tiro)){ // detecta colisao de tiros com o inimigo
+                    
+                    obj_nav.vida--;
+
+                    if(obj_nav.vida == 0){ //inimigo morreu
+                                                
+                        this.listNav.splice(i, 1); //Remove os itens dentro do intervalo, coloque 1 se for apenas um item
+                        i--;
+                        this.destruir(obj_nav, true);
+                                         
+                    }
+
+                }
+
+            }
+            
+            if(detectar_colisao(obj_nav, player)){ // detecta colisão de inimigos com o player
+             
+                this.listNav.splice(i, 1); 
+                i--;
+                this.destruir(obj_nav, false);
+                player.atingido();
+
+            }
+
+            obj_nav.update();
+
+        }
+
+    },
+
+    desenhar: function(){
+
+        for(let i = 0; i < this.listNav.length; i++){
+
+            let obj_nav = this.listNav[i];
+            obj_nav.desenhar();
+
+        }
+
+    },
+
+    destruir: function(nav, pontuacao){
+
+        if(pontuacao)
+            score.adicionar_pontuacao(200);
+
+        nav.destruir();
+    },
+
+};
+
+class Inimigo{
+    
+    constructor(x,y){
+        this.x = x;
+        this.y = y;
+        this.x_objetivo;
+        this.y_objetivo;
+        this.altura = 40;
+        this.largura = 40;
+        this.cor = "#fff";
+        this.imagem = null;   
+        this.vida = 10;
+        this.velocidade = 6;
+        this.c_tiros = null;
+    }
+
+    start(pos_tela) {
+        
+        let x_objetivo = Math.floor(canvas_largura * Math.random());
+        let y_objetivo = Math.floor(canvas_altura * Math.random());
+
+        this.atualizar_posicao(x_objetivo, y_objetivo);
+        this.c_tiros = new Tiros_inimigo();
+
+    }
+
+    atualizar_posicao(x, y){
+
+        if(x - this.largura <= 0){
+            x = this.largura;
+        }
+        else if(x + this.largura >= canvas_largura){
+            x = canvas_largura - this.largura;
+        }
+
+        if(y <= 0){
+            y = 0;
+        }
+        else if(y + this.altura >= canvas_altura){
+            y = canvas_altura - (this.altura);
+        }
+
+        this.x_objetivo = x;
+        this.y_objetivo = y;
+
+    }
+
+    destruir(){
+
+
+    }
+    
+    update(){
+
+        let distancia_x = this.x - this.x_objetivo;
+        let distancia_y = this.y - this.y_objetivo;
+        let distancia_total = Math.sqrt(Math.pow(distancia_x, 2) + Math.pow(distancia_y, 2));
+        
+
+        if(distancia_total <= this.velocidade){
+
+            let x_objetivo = Math.floor(canvas_largura * Math.random());
+            let y_objetivo = Math.floor(canvas_altura * Math.random());
+
+            this.atualizar_posicao(x_objetivo, y_objetivo);
+
+        }
+        else{
+
+            let f = distancia_total/this.velocidade;
+            this.x = this.x - (distancia_x/f);
+            this.y = this.y - (distancia_y/f);
+
+        }      
+        
+        this.c_tiros.update(this.x, (this.y + this.altura/2));
+        
+    }
+
+    desenhar(){
+
+        ctx.fillStyle = this.cor;
+        ctx.fillRect(this.x, this.y, this.altura, this.largura);
+        this.c_tiros.desenhar();
+
+    }
+
+};
+
+class Tiros_inimigo{
+
+    constructor(){
+        this.x = 0;
+        this.y = 0;
+        this.largura = 15;
+        this.altura = 4;
+        this.listTiros = [];
+        this.cores = ["#ffbc1c", "#ff1c1c", "#ff85e1"];
+        this.tempo_inserir = 100;
+        this.config_tempo_inserir = 60;
+        this.velocidade_tiro = 10;
+        this.atirar = true;
+    }
+
+    insere(){
+        this.listTiros.push({
+            x: this.x,
+            y: this.y,
+            largura: this.largura,
+            altura: this.altura,
+            cor: this.cores[Math.floor(3*Math.random())],
+        });
+        this.tempo_inserir = this.config_tempo_inserir;
+
+    }
+
+    update(x, y){
+
+        this.x = x;
+        this.y = y;
+
+        if(this.atirar){
+            if(this.tempo_inserir <= 0){
+                this.insere();
+            }
+            else{
+                this.tempo_inserir--;
+            }
+        }
+
+        for(let i = 0; i < this.listTiros.length; i++){
+            let obj_tiro = this.listTiros[i];
+            obj_tiro.x -= this.velocidade_tiro;
+
+            if(detectar_colisao(obj_tiro, player)){ // detecta colisão de inimigos com o player
+             
+                this.listTiros.splice(i, 1); 
+                i--;
+                this.destruir();
+                player.atingido();
+
+            }
+        }       
+
+    }
+
+    desenhar(){
+
+        for(let i = 0; i < this.listTiros.length; i++){
+            let obj_tiro = this.listTiros[i];
+            ctx.fillStyle = obj_tiro.cor;
+            ctx.fillRect(obj_tiro.x, obj_tiro.y, obj_tiro.largura, obj_tiro.altura);
+        }
+
+    }
+
+    destruir(){
+
+
+    }
+
+}
 
 score = {
 
@@ -320,7 +595,39 @@ score = {
 
         this.valorScore += valor;
     },
+    
 };
+
+vida = {
+    x: 0,
+    y: 0,
+    altura: 10,
+    largura: 10,
+    list_Img: [],
+
+    start : function(){
+        this.x = 20;
+        this.y = 20;
+    },
+
+    update : function(){
+        
+
+        
+    },
+
+    desenhar : function(){
+
+        
+
+    },
+
+    remover_vida : function(){
+
+        
+    },
+
+}
 
 function detectar_colisao(obj1, obj2){
 
@@ -331,6 +638,29 @@ function detectar_colisao(obj1, obj2){
                     return true;
 
     return false;
+}
+
+function validar_pos_tela(obj){
+
+    if(obj.x > canvas_largura || obj.x < 0 || obj.y > canvas_altura || obj.y < 0)
+        return true;
+    else
+        return false;
+
+}
+
+function Sprite(x, y, largura, altura) {
+    
+    this.x = x;
+    this.y = y;
+    this.largura = largura;
+    this.altura = altura;
+
+    this.desenhar = function(xCanvas, yCanvas){
+        ctx.drawImage(image, dx, dy, dWidth, dHeight);
+
+    }
+
 }
 
 // fundo = {
@@ -383,6 +713,7 @@ function main(){ //Inicializa o jogo
 
     player.start();
     score.start();
+    vida.start();
 
     update();
 }
@@ -402,6 +733,7 @@ function atualizar_acoes(){ //Atualizar as mudanças de informações de cada ob
     player.update();
     C_Tiros.update();
     C_Asteroides.update();
+    C_Inimigos.update();
 
 }
 
@@ -413,8 +745,10 @@ function desenhar(){ //Responsavel por chamar as funções que redesenham as inf
     //fundo.desenhar();
     player.desenhar();
     score.desenhar();
+    vida.desenhar();
     C_Tiros.desenhar();
     C_Asteroides.desenhar();
+    C_Inimigos.desenhar();
 }
 
 
