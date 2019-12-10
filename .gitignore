@@ -5,3 +5,5 @@ venv
 .venv
 
 __pycache__/
+webgame/__pycache__
+website/__pycache__
