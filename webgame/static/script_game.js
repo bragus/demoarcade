@@ -2,6 +2,57 @@
 let inicio_canvas_x, inicio_canvas_y, canvas_altura, canvas_largura;
 let canvas, ctx;
 
+game = {
+
+    start : function(){
+        let vertical = false;
+
+        if(window.innerWidth <= 800){
+            canvas_altura = window.innerWidth - 20;
+            canvas_largura = window.innerHeight - 20;
+            vertical = true;
+        }
+        else{
+            canvas_altura = window.innerHeight - 20;
+            canvas_largura = window.innerWidth - 20;
+
+        }
+
+        // if(tela_largura/tela_altura != 1,77){
+        //     tela_largura = tela_altura * 1,77;
+        // }
+
+        
+
+        if(vertical){
+            canvas = document.createElement("canvas");
+        
+            canvas.height = canvas_largura;
+            canvas.width = canvas_altura;
+            canvas.style.border = "1px solid #000";
+
+            ctx = canvas.getContext("2d");
+            // ctx.save(); // sava o contexto antes de transladar
+
+            //ctx.translate(canvas_altura, canvas_largura);//transladar ctx para o alvo
+            ctx.rotate((Math.PI / 180) * 270); 
+            // obj_ast.sprite.desenhar_rotacionado();
+
+            // ctx.restore();
+        }
+        else{
+            canvas = document.createElement("canvas");
+        
+            canvas.height = canvas_altura;
+            canvas.width = canvas_largura;
+            canvas.style.border = "1px solid #000";
+    
+            ctx = canvas.getContext("2d");
+        }
+
+    },
+}
+
 fundo = {
 
     x: 0,
@@ -52,12 +103,12 @@ player = {
     y_objetivo: 0,
     altura: 40,
     largura: 80,
-    cor: "#ff4e4e",
     sprite: null,    
     vida: 0,
     velocidade: 6,
     velocidade_x: 0,
     tempo_bonus: 0,
+    config_tempo_bonus: 200,
     bonus_ativo: false,
 
     start : function(){
@@ -68,9 +119,6 @@ player = {
         let img = new Image();
         img.src = url_player_avanco;
         this.sprite = new Sprite(img, this.x, this.y, this.largura, this.altura);
-
-        //imagem = new Image();
-        //imagem.src = "Img_game/PLAYER_SHIP_OFF.png";
     },
 
     atualizar_posicao : function(mouse_x, mouse_y){
@@ -115,10 +163,19 @@ player = {
 
     update : function(){
         
+        if(this.bonus_ativo){
+            if(this.tempo_bonus <= 0){
+                this.bonus_ativo = false;
+            }
+            else{
+                this.tempo_bonus--;
+            }
+        }
+
         let distancia_x = this.x - this.x_objetivo;
         let distancia_y = this.y - this.y_objetivo;
         let distancia_total = Math.sqrt(Math.pow(distancia_x, 2) + Math.pow(distancia_y, 2));
-        
+       
         if(distancia_total <= this.velocidade){
             this.velocidade_x = 0;
 
@@ -174,7 +231,10 @@ player = {
             
         }
         else{
-            alert("Ganhou tiros");
+            
+            this.tempo_bonus = this.config_tempo_bonus;
+            this.bonus_ativo = true;
+
         }
     },
 };
@@ -183,7 +243,6 @@ player = {
 C_Tiros = { //controlador de tiros do player
 
     listTiros: [],
-    cores: ["#ffbc1c", "#ff1c1c", "#ff85e1"],
     tempo_inserir: 30,
     config_tempo_inserir: 10,
     velocidade_tiro: 10,
@@ -204,18 +263,48 @@ C_Tiros = { //controlador de tiros do player
             y: y,
             largura: largura,
             altura: altura,
+            velocidade_x: this.velocidade_tiro,
+            velocidade_y: 0,
             sprite: sprite, 
         });
 
         this.tempo_inserir = this.config_tempo_inserir;
     },
 
+    insere_triplo: function(){
+
+        // let x = player.x + player.largura/2;
+        // let y = player.y + player.altura/2;
+        // let largura = 40;
+        // let altura = 30;
+        // let img = new Image();
+        // img.src = url_tiro_player;
+        // let sprite = new Sprite(img, x, y, largura, altura);
+
+        // this.listTiros.push({
+        //     x: x,
+        //     y: y,
+        //     largura: largura,
+        //     altura: altura,
+        //     velocidade_x: 0,
+        //     velocidade_y: 0,
+        //     sprite: sprite, 
+        // });
+
+        // this.tempo_inserir = this.config_tempo_inserir;
+
+    },
 
     update: function(){
 
         if(this.atirar){
             if(this.tempo_inserir <= 0){
-                this.insere();
+                if(player.bonus_ativo){
+                    this.insere_triplo();
+                }
+                else{
+                    this.insere();
+                }                
             }
             else{
                 this.tempo_inserir--;
@@ -225,7 +314,8 @@ C_Tiros = { //controlador de tiros do player
         for(let i = 0; i < this.listTiros.length; i++){
 
             let obj_tiro = this.listTiros[i];
-            obj_tiro.x += this.velocidade_tiro;
+            obj_tiro.x += obj_tiro.velocidade_x;
+            obj_tiro.y += obj_tiro.velocidade_y;
             obj_tiro.sprite.atualizar_posicao(obj_tiro.x, obj_tiro.y);
 
             if(obj_tiro.x < 0 || obj_tiro.x > canvas_largura || obj_tiro.y < 0 || obj_tiro.y > canvas_altura){
@@ -653,8 +743,8 @@ class Tiros_inimigo{
     constructor(){
         this.x = 0;
         this.y = 0;
-        this.largura = 40;
-        this.altura = 30;
+        this.largura = 20;
+        this.altura = 5;
         this.listTiros = [];
         this.cores = ["#ffbc1c", "#ff1c1c", "#ff85e1"];
         this.tempo_inserir = 100;
@@ -1005,22 +1095,7 @@ function Sprite(image, x, y, largura, altura) {
 
 function main(){ //Inicializa o jogo
 
-    canvas_altura = window.innerHeight - 20;
-    canvas_largura = canvas_altura * 1.77;
-    inicio_canvas_x = (window.innerWidth - canvas_largura) / 2;
-    inicio_canvas_y = (window.innerHeight - canvas_altura) / 2;
-
-    // if(tela_largura/tela_altura != 1,77){
-    //     tela_largura = tela_altura * 1,77;
-    // }
-
-    canvas = document.createElement("canvas");
-    
-    canvas.height = canvas_altura;
-    canvas.width = canvas_largura;
-    canvas.style.border = "1px solid #000";
-
-    ctx = canvas.getContext("2d");
+    game.start();
 
     document.body.appendChild(canvas);
     document.addEventListener("mousedown", click);
@@ -1029,7 +1104,6 @@ function main(){ //Inicializa o jogo
     document.addEventListener("touchend", clickEnd);
     window.addEventListener("mousemove", getMousePos);
 
-    // fundo.start();
     fundo.start();
     player.start();
     score.start();
