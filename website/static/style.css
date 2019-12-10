@@ -103,6 +103,7 @@ nav {
     font-size: 1.2vw;
     justify-content: center;
     opacity: 0;
+    font-family: "demoArcade";
 }
 
 
@@ -111,6 +112,7 @@ nav {
     font-size: 1.2vw;
     justify-content: center;
     opacity: 0;
+    font-family: "demoArcade";
 }
 
 
@@ -119,6 +121,7 @@ nav {
     font-size: 1.2vw;
     justify-content: center;
     opacity: 0;
+    font-family: "demoArcade";
 }
 
 
@@ -169,16 +172,19 @@ nav {
     display: grid;
     justify-content: center;
     width: 25vw;
+    font-family: "demoArcade";
 }
 
 .score section h2{
     font-size: 1.9vw;
     text-align: center;
+    font-family: "demoArcade";
 }
 
 .score section p{
     font-size: 1.9vw;
     text-align: left;
+    font-family: "demoArcade";
 }
 
 .highScores {
@@ -188,6 +194,7 @@ nav {
 	line-height: 10px;
     font-size: 14px;
     text-align: center;
+    font-family: "demoArcade";
  }
 
  .highScoresRank {
@@ -197,6 +204,7 @@ nav {
 	line-height: 10px;
     font-size: 14px;
     text-align: center;
+    font-family: "demoArcade";
  }
 
 #ranking{
@@ -235,6 +243,7 @@ nav {
 .textodir p{
     color: white;
     font-size: 2.5vw;
+    font-family: "demoArcade";
 }
 
 .textodir img{
@@ -251,6 +260,8 @@ nav {
     color: white;
     font-size: 2.5vw;
     text-align: right;
+    font-family: "demoArcade";
+    
 }
 
 .textoesq img{
@@ -258,3 +269,48 @@ nav {
 }
 
 
+/* =========== FONTE ============ */
+
+@font-face {
+    font-family: "demoArcade";
+    src: url(fonts/FSEX300.ttf)
+}
+
+/* ============== SOBRE =========== */
+
+#sobre{
+    display: flex;
+    justify-content: center;
+    margin-top: 15vh;
+    color: purple; 
+    font-family: "demoArcade";
+    font-size: 3.0vw;
+}
+
+#descricao{
+    color: white;
+    font-family: "demoArcade";
+    font-size: 2vw;
+    text-align: center;
+}
+
+.grupo {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    justify-items: center;
+    margin-top: 12vh
+}
+
+.dev {
+    color: white;
+    font-family: "demoArcade";
+    font-size: 1.5vw;
+}
+
+.dev img {
+    width: 15vw;
+    height: 22vh;
+    border-radius: 100%;
+    border-color: purple;
+}
