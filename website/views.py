@@ -9,7 +9,7 @@ def Mostrar_home (request):
     if form.is_valid():
         form.save()
         context = {
-            'msg' : "Você foi cadastrado com sucesso!"
+            'msg' : "Você foi cadastrado com sucesso!"        
         }
         return render (request, 'home.html', context)
     context = {
