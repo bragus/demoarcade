@@ -228,6 +228,10 @@ C_Tiros = { //controlador de tiros do player
             obj_tiro.x += this.velocidade_tiro;
             obj_tiro.sprite.atualizar_posicao(obj_tiro.x, obj_tiro.y);
 
+            if(obj_tiro.x < 0 || obj_tiro.x > canvas_largura || obj_tiro.y < 0 || obj_tiro.y > canvas_altura){
+                this.destruir(i);
+            }          
+
         }
 
     },
@@ -240,6 +244,12 @@ C_Tiros = { //controlador de tiros do player
             obj_tiro.sprite.desenhar();
         }
 
+    },
+
+    destruir : function(i){
+
+        this.listTiros.splice(i, 1); 
+        i--;
     }
 
 };
@@ -338,7 +348,7 @@ C_Asteroides = {
             vel_y: velocidade_y,
             rotacao: rotacao,
             sprite: sprite,
-            vida: 5,
+            vida: 3,
         });
 
         score.adicionar_pontuacao(1);
@@ -367,7 +377,7 @@ C_Asteroides = {
                 if(detectar_colisao(obj_ast, obj_tiro)){ // detecta colisao de tiros com asteroides
                     
                     obj_ast.vida--;
-
+                    C_Tiros.destruir(c);
                     if(obj_ast.vida == 0){ //asteroide morreu
                                                 
                         this.listAst.splice(i, 1); //Remove os itens dentro do intervalo, coloque 1 se for apenas um item
@@ -485,7 +495,7 @@ C_Inimigos = {
                 if(detectar_colisao(obj_nav, obj_tiro)){ // detecta colisao de tiros com o inimigo
                     
                     obj_nav.vida--;
-
+                    C_Tiros.destruir(c);
                     if(obj_nav.vida == 0){ //inimigo morreu
                                                 
                         this.listNav.splice(i, 1); //Remove os itens dentro do intervalo, coloque 1 se for apenas um item
@@ -545,7 +555,7 @@ class Inimigo{
         this.largura = 50;
         this.cor = "#fff";
         this.sprite = null;   
-        this.vida = 10;
+        this.vida = 8;
         this.velocidade = 4;
         this.c_tiros = null;
     }
