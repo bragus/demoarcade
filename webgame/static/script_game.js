@@ -16,7 +16,12 @@ game = {
     },
 
     endGame : function(){
+
+    
+        alert("Você perdeu, seu score foi: ".concat(score.valorScore.toString()))
         end_game = true;
+
+
     }
 }
 
@@ -82,7 +87,7 @@ player = {
         
         this.largura = this.largura * escala_jogo;
         this.altura = this.altura * escala_jogo;
-        alert(this.largura);
+        confirm("Pressione OK para iniciar")
 
         this.y = canvas_altura/2;
         this.vida = 6;
