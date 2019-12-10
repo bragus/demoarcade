@@ -1,6 +1,48 @@
+
 let inicio_canvas_x, inicio_canvas_y, canvas_altura, canvas_largura;
 let canvas, ctx;
 
+fundo = {
+
+    x: 0,
+    y: 0,
+    altura: 0,
+    largura: 0,
+    velocidade: 8,
+    sprite: null,
+
+    start : function(){
+
+        this.largura = canvas_largura * 4;
+        this.altura = canvas_altura;
+        
+        let img = new Image();
+        img.src = url_fundo;
+        this.sprite = new Sprite(img, this.x, this.y, this.largura, this.altura);
+        
+
+    },
+
+    update : function(){
+
+        let velocidade_atual = this.velocidade - (player.velocidade_x/8);
+        this.x -= velocidade_atual;
+        if(this.x <= -this.largura){
+            this.x = -velocidade_atual;
+        }
+        this.sprite.atualizar_posicao(this.x, this.y);
+
+    },
+
+    desenhar : function(){
+
+        this.sprite.desenhar();
+        this.sprite.atualizar_posicao(this.x + this.largura, this.y);
+        this.sprite.desenhar();
+
+    },
+
+}
 
 player = {
 
@@ -8,17 +50,22 @@ player = {
     y: 0,
     x_objetivo: 50,
     y_objetivo: 0,
-    altura: 50,
-    largura: 50,
+    altura: 40,
+    largura: 80,
     cor: "#ff4e4e",
-    imagem: null,    
+    sprite: null,    
     vida: 0,
     velocidade: 6,
-    
+    velocidade_x: 0,
+
     start : function(){
 
         this.y = canvas_altura/2;
         this.vida = 6;
+
+        let img = new Image();
+        img.src = url_player_avanco;
+        this.sprite = new Sprite(img, this.x, this.y, this.largura, this.altura);
 
         //imagem = new Image();
         //imagem.src = "Img_game/PLAYER_SHIP_OFF.png";
@@ -43,11 +90,24 @@ player = {
         else if(y + this.altura >= canvas_altura){
             y = canvas_altura - (this.altura + 2);
         }
-
+         
         this.x_objetivo = x;
         this.y_objetivo = y;
+    
+    },
 
-        //console.log("X: " + this.x + " | Y: " + this.y);
+    avancar : function(boolean){
+
+        if(boolean){
+            let img = new Image();
+            img.src = url_player_avanco;
+            this.sprite = new Sprite(img, this.x, this.y, this.largura, this.altura);            
+        }
+        else{
+            let img = new Image();
+            img.src = url_player;
+            this.sprite = new Sprite(img, this.x, this.y, this.largura, this.altura);
+        }
 
     },
 
@@ -58,19 +118,25 @@ player = {
         let distancia_total = Math.sqrt(Math.pow(distancia_x, 2) + Math.pow(distancia_y, 2));
         
         if(distancia_total <= this.velocidade){
+            this.velocidade_x = 0;
 
             this.x = this.x_objetivo;
-            this.y = this.y_objetivo;
+            this.y = this.y_objetivo;          
 
         }
         else{
 
             let f = distancia_total/this.velocidade;
 
+            this.velocidade_x = (distancia_x/f);
+
             this.x = this.x - (distancia_x/f);
             this.y = this.y - (distancia_y/f);
-
+            
         }
+
+        this.avancar(distancia_x < 0);   
+        this.sprite.atualizar_posicao(this.x, this.y);
 
         //console.log(distancia_total);
 
@@ -81,19 +147,13 @@ player = {
     },
 
     desenhar : function(){
-
-        //let sprite_player = new Sprite(this.imagem, largura, altura)
-        //sprite_player.desenhar(this.x, this.y);
-
-        //Desenho temporario
-        ctx.fillStyle = this.cor;
-        ctx.fillRect(this.x, this.y, this.altura, this.largura);
-
+        this.sprite.desenhar();
     },
 
     atingido : function(){
 
         this.vida--;
+        vida.remover_vida();
         if(this.vida <= 0){ // perdeu o game
             alert("Perdeu");
         }        
@@ -110,15 +170,16 @@ C_Tiros = { //controlador de tiros do player
     config_tempo_inserir: 10,
     velocidade_tiro: 10,
     atirar: false,
+    sprite: null,   
 
 
     insere: function(){
         this.listTiros.push({
-            x: player.x + player.largura,
+            x: player.x + player.largura/2,
             y: player.y + player.altura/2,
-            largura: 20,
-            altura: 4,
-            cor: this.cores[Math.floor(3*Math.random())],
+            largura: 40,
+            altura: 20,
+            sprite: null, 
         });
 
         this.tempo_inserir = this.config_tempo_inserir;
@@ -150,9 +211,10 @@ C_Tiros = { //controlador de tiros do player
         for(let i = 0; i < this.listTiros.length; i++){
 
             let obj_tiro = this.listTiros[i];
-            ctx.fillStyle = obj_tiro.cor;
-            ctx.fillRect(obj_tiro.x, obj_tiro.y, obj_tiro.largura, obj_tiro.altura);
-
+            let img = new Image();
+            img.src = url_tiro_player;
+            this.sprite = new Sprite(img, obj_tiro.x, obj_tiro.y, obj_tiro.largura, obj_tiro.altura);
+            this.sprite.desenhar();
         }
 
     }
@@ -412,7 +474,7 @@ class Inimigo{
         this.cor = "#fff";
         this.imagem = null;   
         this.vida = 10;
-        this.velocidade = 6;
+        this.velocidade = 4;
         this.c_tiros = null;
     }
 
@@ -601,18 +663,22 @@ score = {
 vida = {
     x: 0,
     y: 0,
-    altura: 10,
-    largura: 10,
-    list_Img: [],
-    img: null,
-    sprite: null,
+    altura: 30,
+    largura: 30,
+    list_sprite: [],
+    list_status_sprite: [],
 
     start : function(){
-        this.x = 20;
-        this.y = 20;
-        this.img = new Image();
-        this.img.src = "";
-        this.sprite = new Sprite(this.img, this.x, this.y, this.largura, this.altura);
+ 
+        for(let i = 0; i < 3; i++){
+            this.x = 20 + (50 * i);
+            this.y = 20;
+            let img = new Image();
+            img.src = url_coracao1;
+            let sprite = new Sprite(img, this.x, this.y, this.largura, this.altura);
+            this.list_sprite.push(sprite);
+            this.list_status_sprite.push(1);
+        }        
     },
 
     update : function(){
@@ -623,13 +689,37 @@ vida = {
 
     desenhar : function(){
 
-        sprite.desenhar();
+        for(let i = 0; i < 3; i++){
+            this.list_sprite[i].desenhar();
+        }
+        
 
     },
 
     remover_vida : function(){
 
-        
+        for(let i = 2; i >= 0; i--){
+            if(this.list_status_sprite[i]!=3){ // vida vazia
+                if(this.list_status_sprite[i] == 1){ // vida cheia
+                    this.list_status_sprite[i] = 2;
+                   
+                    let img = new Image();
+                    img.src = url_coracao2;
+                    let sprite = new Sprite(img, this.list_sprite[i].x, this.list_sprite[i].y, this.list_sprite[i].largura, this.list_sprite[i].altura);
+                    this.list_sprite[i] = sprite;
+                }
+                else{ // meia vida
+                    this.list_status_sprite[i] = 3;
+                    
+                    let img = new Image();
+                    img.src = url_coracao3;
+                    let sprite = new Sprite(img, this.list_sprite[i].x, this.list_sprite[i].y, this.list_sprite[i].largura, this.list_sprite[i].altura);
+                    this.list_sprite[i] = sprite;
+                }
+                break;
+            }
+   
+        }
     },
 
 }
@@ -661,9 +751,13 @@ function Sprite(image, x, y, largura, altura) {
     this.largura = largura;
     this.altura = altura;
 
-    this.desenhar = function(xCanvas, yCanvas){
-        ctx.drawImage(image, dx, dy, dWidth, dHeight);
+    this.desenhar = function(){
+        ctx.drawImage(image, this.x, this.y, this.largura, this.altura);
+    }
 
+    this.atualizar_posicao = function(xCanvas, yCanvas){
+        this.x = xCanvas;
+        this.y = yCanvas;
     }
 
 }
@@ -716,6 +810,7 @@ function main(){ //Inicializa o jogo
 
     // fundo.start();
 
+    fundo.start();
     player.start();
     score.start();
     vida.start();
@@ -735,6 +830,7 @@ function update(){ //Função chamada a cada frame do jogo
 function atualizar_acoes(){ //Atualizar as mudanças de informações de cada objeto
     
     //let rect = canvas.getBoundingClientRect();
+    fundo.update();
     player.update();
     C_Tiros.update();
     C_Asteroides.update();
@@ -746,14 +842,14 @@ function desenhar(){ //Responsavel por chamar as funções que redesenham as inf
     ctx.fillStyle = "#000";
     ctx.fillRect(0, 0, canvas_largura, canvas_altura);
 
-
-    //fundo.desenhar();
-    player.desenhar();
-    score.desenhar();
-    vida.desenhar();
+    fundo.desenhar();
     C_Tiros.desenhar();
     C_Asteroides.desenhar();
     C_Inimigos.desenhar();
+    player.desenhar();
+    score.desenhar();
+    vida.desenhar();
+
 }
 
 
