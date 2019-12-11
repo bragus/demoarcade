@@ -1,6 +1,6 @@
 
 let inicio_canvas_x, inicio_canvas_y, canvas_altura, canvas_largura;
-let canvas, ctx, escala_jogo, end_game;
+let canvas, ctx, escala_jogo, end_game, touchX, touchY;
 
 game = {
 
@@ -284,8 +284,8 @@ C_Tiros = { //controlador de tiros do player
 
         let x = player.x + player.largura/2;
         let y = player.y + player.altura/2;
-        let largura = 20;
-        let altura = 5;
+        let largura = 30;
+        let altura = 8;
 
         largura = largura * escala_jogo;
         altura = altura * escala_jogo;
@@ -1226,7 +1226,7 @@ function main(){ //Inicializa o jogo
 
     document.addEventListener("mousedown", click);
     document.addEventListener("mouseup", clickEnd);
-    document.addEventListener("touchstart", click);
+    document.addEventListener("touchstart", touchStart);
     document.addEventListener("touchend", clickEnd);
     window.addEventListener("mousemove", getMousePos);
     window.addEventListener("resize", redimencionarJanela);
@@ -1299,6 +1299,19 @@ function click(evento){
 function clickEnd(evento){
 
     C_Tiros.atirar = false;
+
+}
+
+function touchStart(evento){
+    evento.preventDefault(); // remove o evento touch
+
+    let touch = evento.touches[0];
+    touchX = touch.pageX;
+    touchY = touch.pageY;
+
+    alert(touchX + " " + touchY);
+
+    C_Tiros.atirar = true;
 
 }
 
