@@ -1314,6 +1314,7 @@ function touchStart(evento){
 }
 
 function touchMove(evento){
+    evento.preventDefault();
 
     let touch = evento.touches[0];
     player.atualizar_posicao(touch.pageX, touch.pageY); 
