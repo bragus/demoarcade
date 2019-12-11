@@ -12,16 +12,18 @@ game = {
 
 
     start : function(){
-
-        canvas = document.createElement("canvas");
+        
         redimencionarJanela();
-        canvas.style.border = "1px solid #000";
-        ctx = canvas.getContext("2d");
-        escala_jogo = Math.max(Math.floor(canvas_largura / 1000), Math.floor(canvas_altura / 1000));
+        escala_jogo = canvas_altura / 1000;  //Math.max(canvas_largura / 1000, canvas_altura / 1000);
         end_game = false;
         this.myMusic = document.createElement("audio");
         this.myMusic.src = url_sound_music;
         this.myMusic.play();
+
+        fundo.start();
+        player.start();
+        score.start();
+        vida.start();
     },
     
 
@@ -30,7 +32,21 @@ game = {
         alert("Você perdeu, seu score foi: ".concat(score.valorScore.toString()))
         end_game = true;
         this.myMusic.pause()
-    }
+    },
+
+    restartGame : function(){
+        end_game = false;
+        fundo.restart();
+        player.restart();
+        C_Tiros.restart();
+        C_Explosao.restart();
+        C_Asteroides.restart();
+        C_Inimigos.restart();
+        score.restart();
+        vida.restart();
+        C_Itens.restart();        
+        window.location.reload(false);
+    },
 }
 
 fundo = {
@@ -49,8 +65,7 @@ fundo = {
         
         let img = new Image();
         img.src = url_fundo;
-        this.sprite = new Sprite(img, this.x, this.y, this.largura, this.altura);
-        
+        this.sprite = new Sprite(img, this.x, this.y, this.largura, this.altura);        
 
     },
 
@@ -71,6 +86,15 @@ fundo = {
         this.sprite.atualizar_posicao(this.x + this.largura, this.y);
         this.sprite.desenhar();
 
+    },
+
+    restart : function(){
+        this.x = 0;
+        this.y = 0;
+        this.altura = 0;
+        this.largura = 0;
+        this.velocidade = 8;
+        this.sprite = null;
     },
 
 }
@@ -95,7 +119,7 @@ player = {
         
         this.largura = this.largura * escala_jogo;
         this.altura = this.altura * escala_jogo;
-        confirm("Pressione OK para iniciar")
+        this.velocidade = this.velocidade * escala_jogo;
 
         this.y = canvas_altura/2;
         this.vida = 6;  
@@ -226,6 +250,22 @@ player = {
 
         }
     },
+    
+    restart : function(){
+        this.x = 50;
+        this.y = 0;
+        this.x_objetivo = 50;
+        this.y_objetivo = 0;
+        this.altura = 40;
+        this.largura = 80;
+        this.velocidade = 6;
+        this.velocidade_x = 0;
+        this.sprite = null;
+        this.tempo_bonus = 0;
+        this.config_tempo_bonus = 200;
+        this.bonus_ativo = false;
+
+    },
 };
 
 
@@ -243,16 +283,22 @@ C_Tiros = { //controlador de tiros do player
         let y = player.y + player.altura/2;
         let largura = 20;
         let altura = 5;
+
+        largura = largura * escala_jogo;
+        altura = altura * escala_jogo;
+
         let img = new Image();
         img.src = url_tiro_player;
         let sprite = new Sprite(img, x, y, largura, altura);
+
+        let velocidade = this.velocidade_tiro * escala_jogo;
 
         this.listTiros.push({
             x: x,
             y: y,
             largura: largura,
             altura: altura,
-            velocidade_x: this.velocidade_tiro,
+            velocidade_x: velocidade,
             velocidade_y: 0,
             sprite: sprite, 
         });
@@ -332,7 +378,16 @@ C_Tiros = { //controlador de tiros do player
 
         this.listTiros.splice(i, 1); 
         i--;
-    }
+    },
+
+    restart : function(){
+        this.listTiros = [];
+        this.tempo_inserir = 30;
+        this.config_tempo_inserir = 10;
+        this.velocidade_tiro = 10;
+        this.atirar = false;
+
+    },
 
 };
 
@@ -344,6 +399,10 @@ C_Explosao = {
 
         let largura = 20;
         let altura = 20;
+
+        largura = largura * escala_jogo;
+        altura = altura * escala_jogo;
+
         let img = new Image();
         img.src = url_explosao;
         let sprite = new Sprite(img, x, y, largura, altura);
@@ -371,7 +430,11 @@ C_Explosao = {
             let obj_tiro = this.listTiros[i];            
             obj_tiro.sprite.desenhar();
         }
-    }
+    },
+
+    restart : function(){
+        this.listEx = [];
+    },
 
 };
 
@@ -417,6 +480,13 @@ C_Asteroides = {
 
         let largura = 30;
         let altura = 60;
+
+        velocidade_x = velocidade_x * escala_jogo;
+        velocidade_y = velocidade_y * escala_jogo;
+
+        largura = largura * escala_jogo;
+        altura = altura * escala_jogo;
+
         let rotacao = calcular_rotacao(pos_x, pos_y, pos_x + velocidade_x, pos_y + velocidade_y);
         let img = new Image();
         img.src = url_meteoro;
@@ -516,6 +586,14 @@ C_Asteroides = {
 
         if(pontuacao)
             score.adicionar_pontuacao(20);
+
+    },
+
+    restart : function(){
+        this.listAst = [];
+        this.pos_y = [1, 2, 3]; //1 = asteroide vindo de cima para baixo, 2 = vindo do meio, 3 = de baixo para cima
+        this.tempo_inserir = 30;
+        this.config_tempo_inserir = 10;
 
     },
 
@@ -625,6 +703,13 @@ C_Inimigos = {
         nav.destruir();
     },
 
+    restart : function(){
+        this.listNav = [];
+        this.pos_tela = [1, 2, 3]; //1 = asteroide vindo de cima para baixo, 2 = vindo do meio, 3 = de baixo para cima
+        this.tempo_inserir = 100;
+        this.config_tempo_inserir = 100;    
+    },
+
 };
 
 class Inimigo{
@@ -636,10 +721,17 @@ class Inimigo{
         this.y_objetivo;
         this.altura = 50;
         this.largura = 50;
+
+        this.largura = this.largura * escala_jogo;
+        this.altura = this.altura * escala_jogo;
+
         this.cor = "#fff";
         this.sprite = null;   
         this.vida = 8;
         this.velocidade = 4;
+
+        this.velocidade = this.velocidade * escala_jogo;
+
         this.c_tiros = null;
     }
 
@@ -738,11 +830,18 @@ class Tiros_inimigo{
         this.y = 0;
         this.largura = 20;
         this.altura = 5;
+
+        this.largura = this.largura * escala_jogo;
+        this.altura = this.altura * escala_jogo;
+
         this.listTiros = [];
         this.cores = ["#ffbc1c", "#ff1c1c", "#ff85e1"];
         this.tempo_inserir = 100;
         this.config_tempo_inserir = 60;
         this.velocidade_tiro = 10;
+
+        this.velocidade_tiro = this.velocidade_tiro * escala_jogo;
+
         this.atirar = true;
        
     }
@@ -821,8 +920,11 @@ score = {
     valorScore: 0,
 
     start : function(){
-        this.x = 20;
-        this.y = canvas_altura - 50;
+        this.x = (20 * escala_jogo);
+        this.y = canvas_altura - (50 * escala_jogo);
+
+        this.largura = this.largura * escala_jogo;
+        this.altura = this.altura * escala_jogo;
     },
 
     update : function(){
@@ -834,7 +936,9 @@ score = {
     desenhar : function(){
 
         ctx.fillStyle = this.cor;
-        ctx.font = "30px 'Press Start 2P'";
+        let tamanho = Math.floor(30 * escala_jogo);
+        let texto = tamanho.toString().concat("px 'Press Start 2P'");
+        ctx.font = texto;
         ctx.fillText(this.valorScore, this.x, this.y);
 
     },
@@ -842,6 +946,17 @@ score = {
     adicionar_pontuacao : function(valor){
 
         this.valorScore += valor;
+    },
+
+    restart : function(){
+        
+        this.x = 0;
+        this.y = 0;
+        this.altura = 50;
+        this.largura = 50;
+        this.cor = "#ff4e4e";
+        this.valorScore = 0;
+
     },
     
 };
@@ -856,9 +971,12 @@ vida = {
 
     start : function(){
  
+        this.largura = this.largura * escala_jogo;
+        this.altura = this.altura * escala_jogo;
+
         for(let i = 0; i < 3; i++){
-            this.x = 20 + (50 * i);
-            this.y = 20;
+            this.x = (50 * escala_jogo) + ((50 * escala_jogo) * i);
+            this.y = 50 * escala_jogo;
             let img = new Image();
             img.src = url_coracao1;
             let sprite = new Sprite(img, this.x, this.y, this.largura, this.altura);
@@ -943,6 +1061,17 @@ vida = {
         }
 
     },
+    
+    restart : function(){
+        
+        this.x = 0;
+        this.y = 0;
+        this.altura = 30;
+        this.largura = 30;
+        this.list_sprite = [];
+        this.list_status_sprite = [];
+
+    },
 
 };
 
@@ -954,8 +1083,8 @@ C_Itens = {
     altura: 50,
     largura: 50,
     sprite: null,
-    config_tempo_inserir: 400,
-    tempo_inserir: 200,
+    config_tempo_inserir: 1000,
+    tempo_inserir: 1000,
     tipo_bonus: 0,
     velocidade: 15,
 
@@ -963,6 +1092,9 @@ C_Itens = {
 
         this.x = canvas_largura;
         this.y = Math.floor(canvas_altura * Math.random());
+        this.largura = this.largura * escala_jogo;
+        this.altura = this.altura * escala_jogo;
+        this.velocidade = this.velocidade * escala_jogo;
 
         let img = new Image();
         this.tipo_bonus = Math.floor(3 * Math.random());
@@ -1007,6 +1139,20 @@ C_Itens = {
 
         if(this.sprite != null)
             this.sprite.desenhar();
+
+    },
+
+    restart : function(){
+        
+        this.x = 0;
+        this.y = 0;
+        this.altura = 50;
+        this.largura = 50;
+        this.sprite = null;
+        this.config_tempo_inserir = 1000;
+        this.tempo_inserir = 1000;
+        this.tipo_bonus = 0;
+        this.velocidade = 15;
 
     },
 
@@ -1066,44 +1212,31 @@ function Sprite(image, x, y, largura, altura) {
 
 }
 
-// fundo = {
-//     // x = 0, y = 0, largura, altura,
-//     // imagem, sprite_fundo,
 
-//     start : function(){
-//         // imagem = new Image();
-//         // imagem.src = "Img_game/fundo.png";
-//         // this.sprite_fundo = new Sprite(this.imagem, largura, altura)
+function main(){ //Inicializa o jogo    
 
-
-//     },
-
-//     desenhar : function(){        
-//         // this.sprite_fundo.desenhar(this.x, this.y);
-
-
-//     }
-// };
-
-
-function main(){ //Inicializa o jogo
-
-    game.start();
-
+    canvas = document.createElement("canvas");
     document.body.appendChild(canvas);
+    canvas.style.border = "1px solid #000";
+    ctx = canvas.getContext("2d");
+
     document.addEventListener("mousedown", click);
     document.addEventListener("mouseup", clickEnd);
     document.addEventListener("touchstart", click);
     document.addEventListener("touchend", clickEnd);
     window.addEventListener("mousemove", getMousePos);
     window.addEventListener("resize", redimencionarJanela);
-
-    fundo.start();
-    player.start();
-    score.start();
-    vida.start();
+    
+    game.start();
 
     update();
+}
+
+function restart(){
+
+    game.restartGame();
+    //game.start();
+
 }
 
 
@@ -1111,6 +1244,9 @@ function update(){ //Função chamada a cada frame do jogo
     if(end_game != true){
         atualizar_acoes();
         desenhar();
+    }
+    else{
+        restart();
     }
 
     window.requestAnimationFrame(update);
@@ -1212,3 +1348,4 @@ $('#highScore').on('submit', (e) => {
   
   update();
   
+main();
