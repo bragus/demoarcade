@@ -16,22 +16,23 @@ game = {
         redimencionarJanela();
         escala_jogo = canvas_altura / 1000;  //Math.max(canvas_largura / 1000, canvas_altura / 1000);
         end_game = false;
-        this.myMusic = document.createElement("audio");
-        this.myMusic.src = url_sound_music;
-        this.myMusic.play();
 
         fundo.start();
         player.start();
         score.start();
         vida.start();
+
+        // this.myMusic = document.createElement("audio");
+        // this.myMusic.src = url_sound_music;
+        // this.myMusic.play();
     },
     
 
-    endGame : function(){
-
-        alert("Você perdeu, seu score foi: ".concat(score.valorScore.toString()))
+    endGame : function(){        
+        
+        alert("Você perdeu, seu score foi: ".concat(score.valorScore.toString()));
         end_game = true;
-        this.myMusic.pause()
+        // this.myMusic.pause();
     },
 
     restartGame : function(){
@@ -222,12 +223,14 @@ player = {
 
         this.vida--;
         vida.remover_vida();
-        this.impacto = document.createElement("audio");
-        this.impacto.src = url_sound_impacto;
-        this.impacto.play();        
+
+        game.impacto = document.createElement("audio");
+        game.impacto.src = url_sound_impacto;
+        game.impacto.play();    
+
         if(this.vida <= 0){ // perdeu o game
             game.endGame();
-            this.myMusic.pause();
+            //this.myMusic.pause();
         }        
 
     },
@@ -304,9 +307,10 @@ C_Tiros = { //controlador de tiros do player
         });
 
         this.tempo_inserir = this.config_tempo_inserir;
-        this.tiroPlayer = document.createElement("audio");
-        this.tiroPlayer.src = url_sound_tiro;
-        this.tiroPlayer.play();
+
+        game.tiroPlayer = document.createElement("audio");
+        game.tiroPlayer.src = url_sound_tiro;
+        game.tiroPlayer.play();
     },
 
     insere_triplo: function(){
@@ -936,7 +940,7 @@ score = {
     desenhar : function(){
 
         ctx.fillStyle = this.cor;
-        let tamanho = Math.floor(30 * escala_jogo);
+        let tamanho = Math.floor(50 * escala_jogo);
         let texto = tamanho.toString().concat("px 'Press Start 2P'");
         ctx.font = texto;
         ctx.fillText(this.valorScore, this.x, this.y);
@@ -1246,7 +1250,8 @@ function update(){ //Função chamada a cada frame do jogo
         desenhar();
     }
     else{
-        restart();
+        end_game = false;
+        restart();        
     }
 
     window.requestAnimationFrame(update);
@@ -1322,30 +1327,26 @@ function redimencionarJanela(){
 // }
 
 
-main();
-
-$('#highScore').on('submit', (e) => {
-    e.preventDefault();
-    let name = $('#name').val();
+// $('#highScore').on('submit', (e) => {
+//     e.preventDefault();
+//     let name = $('#name').val();
   
-    $.ajax({
-      url: '',
-      data: JSON.stringify({
-        "date": new Date,
-        "name": name,
-        "score": player.score,
-      }),
-      type: "POST",
-      contentType: "application/json",
-      success: (data) => {
-        $('#highScore').html( '<h4>Obrigado por jogar!</h4>' );
-      },
-      error: (xhr, status, err) => {
-        console.log(err);
-      }
-    });
-  });    
-  
-  update();
+//     $.ajax({
+//       url: '',
+//       data: JSON.stringify({
+//         "date": new Date,
+//         "name": name,
+//         "score": player.score,
+//       }),
+//       type: "POST",
+//       contentType: "application/json",
+//       success: (data) => {
+//         $('#highScore').html( '<h4>Obrigado por jogar!</h4>' );
+//       },
+//       error: (xhr, status, err) => {
+//         console.log(err);
+//       }
+//     });
+//   });    
   
 main();
