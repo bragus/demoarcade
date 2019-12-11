@@ -107,7 +107,11 @@ player = {
         
         this.largura = this.largura * escala_jogo;
         this.altura = this.altura * escala_jogo;
+<<<<<<< HEAD
         this.velocidade = this.velocidade * escala_jogo;
+=======
+        confirm("Pressione OK para iniciar")
+>>>>>>> 0fc76277fcdfa258a52598e29f1a6d4ea8df0d36
 
         this.y = canvas_altura/2;
         this.vida = 6;
