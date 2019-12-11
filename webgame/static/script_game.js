@@ -1,6 +1,6 @@
 
 let inicio_canvas_x, inicio_canvas_y, canvas_altura, canvas_largura;
-let canvas, ctx, escala_jogo, end_game, touchX, touchY;
+let canvas, ctx, escala_jogo, end_game;
 
 game = {
 
@@ -1227,7 +1227,8 @@ function main(){ //Inicializa o jogo
     document.addEventListener("mousedown", click);
     document.addEventListener("mouseup", clickEnd);
     document.addEventListener("touchstart", touchStart);
-    document.addEventListener("touchend", clickEnd);
+    document.addEventListener("touchmove", touchMove);
+    document.addEventListener("touchend", touchEnd);
     window.addEventListener("mousemove", getMousePos);
     window.addEventListener("resize", redimencionarJanela);
     
@@ -1306,12 +1307,24 @@ function touchStart(evento){
     evento.preventDefault(); // remove o evento touch
 
     let touch = evento.touches[0];
-    touchX = touch.pageX;
-    touchY = touch.pageY;
-
-    alert(touchX + " " + touchY);
+    player.atualizar_posicao(touch.pageX, touch.pageY); 
 
     C_Tiros.atirar = true;
+
+}
+
+function touchMove(evento){
+
+    let touch = evento.touches[0];
+    player.atualizar_posicao(touch.pageX, touch.pageY); 
+
+    C_Tiros.atirar = true;
+
+}
+
+function touchEnd(evento){
+
+    C_Tiros.atirar = false;
 
 }
 
