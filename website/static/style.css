@@ -3,7 +3,7 @@
 
 body {
     background-image: url(Img_template/fundo.png);
-    background-size: 30vw;
+    background-size: 90vw;
     display: grid;
     font-family: 'Fixedsys Excelsior 3.01';
     grid-template-areas:'navbar'
@@ -15,7 +15,7 @@ body {
 nav {
     align-items: center;
     background-image: url(Img_template/fundo.png);
-    background-size: 30vw;
+    background-size: 90vw;
     border: 0.2vw solid;
     border-color: #7053c6;
     border-radius: 5px;

@@ -308,9 +308,9 @@ C_Tiros = { //controlador de tiros do player
 
         this.tempo_inserir = this.config_tempo_inserir;
 
-        game.tiroPlayer = document.createElement("audio");
-        game.tiroPlayer.src = url_sound_tiro;
-        game.tiroPlayer.play();
+        // game.tiroPlayer = document.createElement("audio");
+        // game.tiroPlayer.src = url_sound_tiro;
+        // game.tiroPlayer.play();
     },
 
     insere_triplo: function(){
