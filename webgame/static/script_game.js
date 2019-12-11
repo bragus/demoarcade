@@ -9,7 +9,7 @@ game = {
         redimencionarJanela();
         escala_jogo = canvas_altura / 1000;  //Math.max(canvas_largura / 1000, canvas_altura / 1000);
         end_game = false;
-        
+
         fundo.start();
         player.start();
         score.start();
@@ -107,11 +107,7 @@ player = {
         
         this.largura = this.largura * escala_jogo;
         this.altura = this.altura * escala_jogo;
-<<<<<<< HEAD
         this.velocidade = this.velocidade * escala_jogo;
-=======
-        confirm("Pressione OK para iniciar")
->>>>>>> 0fc76277fcdfa258a52598e29f1a6d4ea8df0d36
 
         this.y = canvas_altura/2;
         this.vida = 6;
@@ -903,8 +899,8 @@ score = {
     valorScore: 0,
 
     start : function(){
-        this.x = 20;
-        this.y = canvas_altura - 50;
+        this.x = (20 * escala_jogo);
+        this.y = canvas_altura - (50 * escala_jogo);
 
         this.largura = this.largura * escala_jogo;
         this.altura = this.altura * escala_jogo;
@@ -1289,20 +1285,5 @@ function redimencionarJanela(){
     canvas.height = canvas_altura;
 
 }
-
-// function Sprite(imagem, largura, altura){
-
-//     this.imagem = imagem;
-//     this.largura = largura;
-//     this.altura = altura;
-
-//     this.desenhar = function(xCanvas, yCanvas) {
-
-//         ctx.drawImage(this.imagem, xCanvas, yCanvas);
-        
-//     } 
-
-// }
-
 
 main();
