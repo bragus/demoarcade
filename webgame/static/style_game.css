@@ -6,3 +6,8 @@ canvas{
     right: 0px;
     margin: auto;
 }
+
+html,
+body {
+    overscroll-behavior: none;
+}
