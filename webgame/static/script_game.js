@@ -4,22 +4,34 @@ let canvas, ctx, escala_jogo, end_game;
 
 game = {
 
+    myMusic: null,
+    mortePlayer: null,
+    morteAlien: null,
+    tiroPlayer: null,
+    impacto: null,
+
+
     start : function(){
         
         redimencionarJanela();
         escala_jogo = canvas_altura / 1000;  //Math.max(canvas_largura / 1000, canvas_altura / 1000);
         end_game = false;
+        this.myMusic = document.createElement("audio");
+        this.myMusic.src = url_sound_music;
+        this.myMusic.play();
 
         fundo.start();
         player.start();
         score.start();
         vida.start();
     },
+    
 
     endGame : function(){
 
-        alert("Voce perdeu, seu score foi: ".concat(score.valorScore.toString()));
-        end_game = true;        
+        alert("Você perdeu, seu score foi: ".concat(score.valorScore.toString()))
+        end_game = true;
+        this.myMusic.pause()
     },
 
     restartGame : function(){
@@ -110,7 +122,8 @@ player = {
         this.velocidade = this.velocidade * escala_jogo;
 
         this.y = canvas_altura/2;
-        this.vida = 6;
+        this.vida = 6;  
+        
 
         let img = new Image();
         img.src = url_player_avanco;
@@ -209,8 +222,12 @@ player = {
 
         this.vida--;
         vida.remover_vida();
+        this.impacto = document.createElement("audio");
+        this.impacto.src = url_sound_impacto;
+        this.impacto.play();        
         if(this.vida <= 0){ // perdeu o game
             game.endGame();
+            this.myMusic.pause();
         }        
 
     },
@@ -287,6 +304,9 @@ C_Tiros = { //controlador de tiros do player
         });
 
         this.tempo_inserir = this.config_tempo_inserir;
+        this.tiroPlayer = document.createElement("audio");
+        this.tiroPlayer.src = url_sound_tiro;
+        this.tiroPlayer.play();
     },
 
     insere_triplo: function(){
@@ -387,6 +407,7 @@ C_Explosao = {
         img.src = url_explosao;
         let sprite = new Sprite(img, x, y, largura, altura);
 
+        
         this.listEx.push({
             x: x,
             y: y,
@@ -1286,4 +1307,45 @@ function redimencionarJanela(){
 
 }
 
+// function Sprite(imagem, largura, altura){
+
+//     this.imagem = imagem;
+//     this.largura = largura;
+//     this.altura = altura;
+
+//     this.desenhar = function(xCanvas, yCanvas) {
+
+//         ctx.drawImage(this.imagem, xCanvas, yCanvas);
+        
+//     } 
+
+// }
+
+
+main();
+
+$('#highScore').on('submit', (e) => {
+    e.preventDefault();
+    let name = $('#name').val();
+  
+    $.ajax({
+      url: '',
+      data: JSON.stringify({
+        "date": new Date,
+        "name": name,
+        "score": player.score,
+      }),
+      type: "POST",
+      contentType: "application/json",
+      success: (data) => {
+        $('#highScore').html( '<h4>Obrigado por jogar!</h4>' );
+      },
+      error: (xhr, status, err) => {
+        console.log(err);
+      }
+    });
+  });    
+  
+  update();
+  
 main();
