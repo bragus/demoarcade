@@ -18,24 +18,24 @@
 <body>
         <section class="home">
             <div id="logohome"> 
-                <img src={% static 'Img_template/demoarcade.png' %} alt="demoarcade"></body>
+                <img src="{% static 'Img_template/demoarcade.png' %}" alt="demoarcade"></body>
             </div> 
             <div class ="home_icons"> 
-                <a href="/game" id="home_icon_play"><img src={% static 'Img_template/playicon.png' %} title= "Clique aqui para jogar">
+                <a href="/game" id="home_icon_play"><img src="{% static 'Img_template/playicon.png' %}" title= "Clique aqui para jogar">
                 <p id="mostrar_play">jogar</p>
                 </a>
 
-                <a href="/sobre" id="home_icon_about"><img src={% static 'Img_template/abouticon.png' %} alt="Ícone do sobre">
+                <a href="/sobre" id="home_icon_about"><img src="{% static 'Img_template/abouticon.png' %}" alt="Ícone do sobre">
                 <p id="mostrar_about">sobre</p>
                 </a>
-                <a href="/instrucoes" id="home_icon_help"><img src={% static 'Img_template/howtoplayicon.png' %} alt="Ícone das instruções">
+                <a href="/instrucoes" id="home_icon_help"><img src="{% static 'Img_template/howtoplayicon.png' %}" alt="Ícone das instruções">
                 <p id="mostrar_help">ajuda</p></a> 
                 </div>
         </section>
 
         <div class="cadastro">
 
-            <p>Faça seu cadastro!</p>
+            <p>Logue ou Faça seu cadastro!</p>
          </div>
 
          <div class="form">
@@ -45,9 +45,8 @@
             {{formulary}}
             <div id="button">
                 <button>
-                    <img src={% static 'Img_template/enviar.png' %}>
-                </button>
-                
+                    <img src="{% static 'Img_template/enviar.png' %}">
+                </button>                
             </div>
             </form>
             {% endif %}
@@ -66,7 +65,7 @@
                 <div class="highScores"></div>
                 <div id="highScores"></div>
 
-                    <a href="/ranking" id="ranking"><img src={% static 'Img_template/ranking.png' %} alt="Botão de ranking"></a>
+                    <a href="/ranking" id="ranking"><img src="{% static 'Img_template/ranking.png' %}" alt="Botão de ranking"></a>
             </section>
         </div>
 </html>
