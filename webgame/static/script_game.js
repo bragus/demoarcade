@@ -60,9 +60,9 @@ fundo = {
     update : function(){
 
         let velocidade_atual = this.velocidade - (player.velocidade_x/8);
-        this.x -= velocidade_atual;
+        this.x -= (velocidade_atual * escala_jogo);
         if(this.x <= -this.largura){
-            this.x = -velocidade_atual;
+            this.x = -(velocidade_atual * escala_jogo);
         }
         this.sprite.atualizar_posicao(this.x, this.y);
 
