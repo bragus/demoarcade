@@ -162,7 +162,7 @@ nav {
     display: flex;
     justify-content: center;
     font-size: 1.5vw;
-
+    font-family: "demoArcade";
 }
 
 .form{
@@ -174,6 +174,7 @@ nav {
 
 .form form{
     color:white;
+    font-family: "demoArcade";
 }
 
 
@@ -181,6 +182,7 @@ nav {
     display: flex;
     justify-content: center;
     align-items: center;
+    font-family: "demoArcade";
 }
 
 .form button img{
