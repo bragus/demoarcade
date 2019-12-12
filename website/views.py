@@ -7,6 +7,7 @@ from django.contrib.auth import authenticate, login
 
 def Mostrar_home (request):
     form = playerForm(request.POST or None)
+    list_ranking = pontuacao.objects.filter()
 
     if request.POST:
         if form.is_valid(): #Cadastro
@@ -34,20 +35,23 @@ def Mostrar_home (request):
                 else:
                     context = {
                         'formulary':form,
-                        'msg' : "Este Nickname ja esta em uso, encontre o seu! Ou digite a senha correta..."        
+                        'msg' : "Este Nickname ja esta em uso, encontre o seu! Ou digite a senha correta...",
+                        'list_ranking': list_ranking,        
                     }
                     return render (request, 'home.html', context) 
 
             else:
                 form.save()
                 context = {
-                    'msg' : "Você foi cadastrado com sucesso!"        
+                    'msg' : "Você foi cadastrado com sucesso!",
+                    'list_ranking': list_ranking,        
                 }
                 return render (request, 'home.html', context) 
             
 
     context = {
-        'formulary': form
+        'formulary': form,
+        'list_ranking': list_ranking,
     }
 
     return render (request, 'home.html', context)

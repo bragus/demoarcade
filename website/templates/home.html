@@ -59,11 +59,18 @@
         {% endif %}     
 
         <div class="score">
-            <section> 
+            <section>              
                 
-                <div class="highScores"></div>
-                <div id="highScores"></div>
+                <div class = "titulo_ranking_home"><h1>Ranking Global</h1></div>
 
+                {% for item in list_ranking %}
+                    <div class = "div_item_ranking">
+                        <p>{{ item.player.nickname }}</p>
+                        <p>{{ item.pontuacao }}</p>
+                    </div>
+                {% endfor %}
+
+                <div id="highScores"></div>
                     <a href="/ranking" id="ranking"><img src="{% static 'Img_template/ranking.png' %}" alt="Botão de ranking"></a>
             </section>
         </div>
