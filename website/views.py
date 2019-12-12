@@ -21,17 +21,21 @@ def Mostrar_home (request):
 
             if nick_existente is not None:
 
-                user = player.objects.filter(nickname = nickname, senha = senha).first()
-
+                user = player.objects.filter(nickname = nickname, senha = senha).first()                
+                
                 if user is not None:
-                    context = {
-                        'nickname' : "teste", 
-                        'pontuacao' : "pass"                           
-                    }
-                    #return render (request, 'game.html', context)
+                    
+                    valor_pontuacao = 0 
+                    campo_pontuacao = pontuacao.objects.filter(player = user).first() 
+                    if campo_pontuacao is not None:
+                        valor_pontuacao = campo_pontuacao.pontuacao 
 
-                    #return render (request, 'home.html', context)
-                    return redirect("/game")  
+                    context = {
+                        'nickname' : nickname, 
+                        'pontuacao' : valor_pontuacao                        
+                    }
+                    return render (request, 'game.html', context)
+                    #return redirect("/game")  
 
                 else:
                     context = {
@@ -44,10 +48,10 @@ def Mostrar_home (request):
             else:
                 form.save()
                 context = {
-                    'msg' : "Você foi cadastrado com sucesso!",
-                    'list_ranking': list_ranking,        
+                        'nickname' : nickname, 
+                        'pontuacao' : 0                           
                 }
-                return render (request, 'home.html', context) 
+                return render (request, 'game.html', context) 
             
 
     context = {
@@ -74,6 +78,24 @@ def Mostrar_ranking (request):
     print(len(list_ranking))
 
     return render (request, 'ranking.html', contexto)
+
+
+def Mostrar_game(request):
+
+    nome = request.POST.get('nickname')
+    pontuacao = request.POST.get('pontuacao')
+
+    if nome == None:
+        context = {
+            'anonimo' : True    
+        }
+    else:        
+        context = {
+            'nickname' : nome,
+            'pontuacao' : pontuacao,     
+        }
+
+    return render(request, "game.html", context)
 
 
 

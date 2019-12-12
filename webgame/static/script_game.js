@@ -1220,6 +1220,8 @@ function Sprite(image, x, y, largura, altura) {
 
 function main(){ //Inicializa o jogo    
 
+    alert("JS ANTIGO");
+    
     canvas = document.createElement("canvas");
     document.body.appendChild(canvas);
     canvas.style.border = "1px solid #000";
@@ -1234,6 +1236,7 @@ function main(){ //Inicializa o jogo
     window.addEventListener("resize", redimencionarJanela);
 
     nickname = document.getElementById("corpo_pagina").getAttribute("nickname");
+
 
     game.start();
 

@@ -10,7 +10,10 @@ body {
                         'header'  
                         'main';
     grid-template-columns: 100%;
+    
 }
+
+
 
 nav {
     align-items: center;
@@ -381,18 +384,45 @@ button{
     border-radius: 100%;
     border-color: purple;
     width: 15vw;
-
 }
 
 .titulo_ranking{
-
+    align-items: center;
     color : white;
-    padding-top: 200px;
+    display: flex;
+    justify-content: center;
+    padding-top: 10vw;
+}
+
+.titulo_ranking_home{
+    align-items: center;
+    color : white;
+    display: flex;
+    justify-content: center;
+}
+
+.container_rank{
+    align-items: center;
+    display: flex;
+    justify-content: center;
 
 }
 
-.div_item_ranking{
+.div_item_rank{
+    align-items: center;
+    border: 0.1vw solid;
+    border-color: #7053c6;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-evenly;
+    margin: 0;
+    width: 25vw;
 
-    color : white;
+}
 
+
+.div_item_rank p{
+    color: white;
+    font-size: 1.5vw;
+    margin: 0;
 }

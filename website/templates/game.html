@@ -1,0 +1,43 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="{% static 'style_game.css' %}">
+    <link href="https://fonts.googleapis.com/css?family=Press+Start+2P&display=swap" rel="stylesheet"> 
+    <link rel="shortcut icon" href="{% static 'Img_game/favicon.ico' %}"/>
+
+    <script>
+        let url_fundo = "{% static 'Img_game/fundo.png' %}";
+        let url_player = "{% static 'Img_game/PLAYER_SHIP_OFF.png' %}";
+        let url_player_avanco = "{% static 'Img_game/PLAYER_SHIP_ON.png' %}";
+        let url_tiro_player = "{% static 'Img_game/PLAYER_SHIP_SHOT.png' %}";
+        let url_tiro_power = "{% static 'Img_game/tiros_power.png' %}";
+        let url_coracao1 = "{% static 'Img_game/coracao_1.png' %}";
+        let url_coracao2 = "{% static 'Img_game/coracao_2.png' %}";
+        let url_coracao3 = "{% static 'Img_game/coracao_3.png' %}";
+        let url_coracao_power = "{% static 'Img_game/coracao_power.png' %}";
+        let url_inimigo1 = "{% static 'Img_game/ENEMY_SHIP_1.png' %}";
+        let url_inimigo2 = "{% static 'Img_game/ENEMY_SHIP_2.png' %}";
+        let url_inimigo3 = "{% static 'Img_game/ENEMY_SHIP_3.png' %}";
+        let url_tiro_inimigo = "{% static 'Img_game/ENEMY_SHIP_SHOT.png' %}";
+        let url_explosao = "{% static 'Img_game/explo.png' %}";
+        let url_meteoro = "{% static 'Img_game/METEOR_1.png' %}";
+        let url_sound_music = "{% static 'Sound_fx/music.wav' %}";
+        let url_sound_impacto = "{% static 'Sound_fx/impacto2.wav' %}";
+        let url_sound_morte = "{% static 'Sound_fx/morte_player.wav' %}";
+        let url_sound_tiro = "{% static 'Sound_fx/tiro_player.wav' %}";
+        let url_sound_morte_alien = "{% static 'Sound_fx/morte_alien1.wav' %}";
+
+    </script>
+    <script defer src="{% static 'script_game.js' %}"></script>
+    
+    <title>DemoArcade</title>
+</head>
+<body id="corpo_pagina" nickname="{{ nickname }}" pontuacao = "{{ pontuacao }}">
+    
+</body>
+</html>
