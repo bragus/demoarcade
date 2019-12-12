@@ -3,13 +3,18 @@
 
 {% block content %}
 
-<div class = "titulo_ranking"><h1>Ranking Global</h1></div>
+
+<div class = "titulo_ranking">
+    <h2>Ranking Global</h2>
+</div>
 
 {% for item in list_ranking %}
-    <div class = "div_item_ranking">
-        <p>{{ item.player.nickname }}</p>
-        <p>{{ item.pontuacao }}</p>
+    <div class="container_rank">
+    <div class = "div_item_rank">
+        <p> {{ item.player.nickname }}</p>
+        <p> {{ item.pontuacao }} </p>
     </div>
+</div>
 {% endfor %}
     
 {% endblock %} 
