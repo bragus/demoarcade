@@ -81,18 +81,30 @@ def Mostrar_ranking (request):
 
 
 def Mostrar_game(request):
+    
+    #form = playerForm(request.POST or None)
 
-    nome = request.POST.get('nickname')
-    pontuacao = request.POST.get('pontuacao')
+    nickname_js = request.POST.get('nickname_js')
 
-    if nome == None:
+    if nickname_js != None:
+        #nickname_js = form.cleaned_data['nickname_js']
+        print(nickname_js)
+        return render(request, "home.html")
+        
+        # print(nickname)
+        # print(recorde)
+
+    nickname = request.POST.get('nickname')
+    recorde = request.POST.get('pontuacao')
+
+    if nickname == None:
         context = {
             'anonimo' : True    
         }
     else:        
         context = {
-            'nickname' : nome,
-            'pontuacao' : pontuacao,     
+            'nickname' : nickname,
+            'pontuacao' : recorde,     
         }
 
     return render(request, "game.html", context)

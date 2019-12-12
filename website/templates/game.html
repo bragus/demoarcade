@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="{% static 'style_game.css' %}">
     <link href="https://fonts.googleapis.com/css?family=Press+Start+2P&display=swap" rel="stylesheet"> 
     <link rel="shortcut icon" href="{% static 'Img_game/favicon.ico' %}"/>
-
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script>
         let url_fundo = "{% static 'Img_game/fundo.png' %}";
         let url_player = "{% static 'Img_game/PLAYER_SHIP_OFF.png' %}";
@@ -38,6 +38,76 @@
     <title>DemoArcade</title>
 </head>
 <body id="corpo_pagina" nickname="{{ nickname }}" pontuacao = "{{ pontuacao }}">
-    
+
+    <script>
+
+        function enviar(){
+
+            htmlWidth = $("html").width();
+            $.ajax({
+                type: "POST",
+                url: "/game",
+                data:{ nickname_js: "teste nome" }, 
+                success: function(data){
+                    console.log(data); 
+                }
+            })
+
+
+            // $(document).on('submit', '#post-form',function(e){
+            //     $.ajax({
+            //         type:'POST',
+            //         url:'/game',
+            //         data:{
+            //             nickname:"testename",
+            //             pontuacao: 10,
+            //             csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+            //             action: 'post'
+            //         },
+            //         success:function(json){
+
+            //         },
+            //         error : function(xhr,errmsg,err) {
+            //             console.log("erro"); 
+            //         }
+            //     });
+            // });
+
+            // form = document.createElement('form');
+            // form.setAttribute('method', 'POST');
+            //form.setAttribute('action', 'someURL');
+            // {% csrf_token %}
+            // var csrf = document.createElement('input');
+            // csrf.setAttribute("type","hidden");
+            // csrf.setAttribute("name","_token");
+            // csrf.setAttribute("value","{% csrf_token %}")
+            // form.appendChild(csrf);
+
+            // myvar = document.createElement('input');
+            // myvar.setAttribute('nickname_js', "teste envio");
+            // myvar.setAttribute('recorde_js', "teste envio senha");
+            // form.appendChild(myvar);
+            // document.body.appendChild(form);
+            // form.submit();   
+
+            // $(document).ready(function () {
+            //     $("#test").submit(function (event) {
+            //         $.ajax({
+            //         type: "POST",
+            //         url: "/edit_favorites/",
+            //         data: {
+            //             'video': $('#test').val() // from form
+            //         },
+            //         success: function () {
+            //             $('#message').html("<h2>Contact Form Submitted!</h2>")
+            //         }
+            //         });
+            //         return false; //<---- move it here
+            //     });
+            // });
+
+        }
+    </script>
+
 </body>
 </html>
