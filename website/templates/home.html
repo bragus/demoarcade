@@ -35,10 +35,11 @@
 
         <div class="cadastro">
 
-            <p>Logue ou Faça seu cadastro!</p>
-         </div>
+        <p>Logue ou Faça seu cadastro para jogar!</p>
 
-         <div class="form">
+        </div>
+
+        <div class="form">
             {% if formulary %}
             <form method="POST">
             {% csrf_token %}
@@ -50,14 +51,12 @@
             </div>
             </form>
             {% endif %}
-            {% if msg %}
-            <h2 class="cadastro">Você foi cadastrado com sucesso!</h2>
-            {% endif %}
+
         </div>
-
         
-
-
+        {% if msg %}
+        <h2 class="cadastro">{{msg}}</h2>
+        {% endif %}     
 
         <div class="score">
             <section> 

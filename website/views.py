@@ -14,23 +14,40 @@ def Mostrar_home (request):
             senha = form.cleaned_data['senha']            
 
             #Buscar correspondencia no banco          
-            user = authenticate(nickname = nickname, senha = senha)
-            if user is not None:
-                context = {
-                    'msg' : "Você foi logado com sucesso!"        
-                }
-                return redirect("/game")  
+            #user = authenticate(nickname = nickname, senha = senha)
+
+            nick_existente = player.objects.filter(nickname = nickname).first()
+
+            if nick_existente is not None:
+
+                user = player.objects.filter(nickname = nickname, senha = senha).first()
+
+                if user is not None:
+                    context = {
+                        'nick' : "teste"                             
+                    }
+                    return render (request, 'game.html', context)
+
+                    #return render (request, 'home.html', context)
+                    #return redirect("/game")  
+
+                else:
+                    context = {
+                        'formulary':form,
+                        'msg' : "Este Nickname ja esta em uso, encontre o seu! Ou digite a senha correta..."        
+                    }
+                    return render (request, 'home.html', context) 
 
             else:
                 form.save()
                 context = {
                     'msg' : "Você foi cadastrado com sucesso!"        
                 }
-                return redirect("/game")      
+                return render (request, 'home.html', context) 
             
 
     context = {
-        'formulary':form
+        'formulary': form
     }
 
     return render (request, 'home.html', context)
@@ -42,7 +59,16 @@ def Mostrar_instrucoes (request):
     return render (request, 'instrucoes.html')
 
 def Mostrar_ranking (request):
-    return render (request, 'ranking.html')
+
+    list_ranking = pontuacao.objects.filter()
+
+    contexto = {        
+        "list_ranking": list_ranking,
+    }
+
+    print(len(list_ranking))
+
+    return render (request, 'ranking.html', contexto)
 
 
 

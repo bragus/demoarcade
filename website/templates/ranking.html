@@ -2,13 +2,14 @@
 {% load static %}
 
 {% block content %}
-<head>
-    <script defer src="{% static 'java.js' %}"></script>
-</head>
 
-<div id="#RankingPage">
-    <div class="highScoresRank"></div>
-    <div id="highScoresRank"></div>
-</div>
+<div class = "titulo_ranking"><h1>Ranking Global</h1></div>
+
+{% for item in list_ranking %}
+    <div class = "div_item_ranking">
+        <p>{{ item.player.nickname }}</p>
+        <p>{{ item.pontuacao }}</p>
+    </div>
+{% endfor %}
     
 {% endblock %} 
