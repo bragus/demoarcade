@@ -1100,7 +1100,7 @@ C_Itens = {
     config_tempo_inserir: 700,
     tempo_inserir: 1000,
     tipo_bonus: 0,
-    velocidade: 15,
+    velocidade: 10,
 
     insere : function(){
 
@@ -1108,7 +1108,7 @@ C_Itens = {
         this.y = Math.floor(canvas_altura * Math.random());
         let largura = this.largura * escala_jogo;
         let altura = this.altura * escala_jogo;
-        this.velocidade = this.velocidade * escala_jogo;
+        this.velocidade = this.velocidade * escala_velocidade;
 
         let img = new Image();
         this.tipo_bonus = Math.floor(3 * Math.random());
@@ -1266,8 +1266,8 @@ function restart(){
 function update(){ //Função chamada a cada frame do jogo
     if(end_game != true){
 
-        if((escala_jogo) >= escala_velocidade/2.5)
-            escala_velocidade += escala_velocidade/20000;
+        if((escala_jogo) >= escala_velocidade/3)
+            escala_velocidade += escala_velocidade/30000;
 
         atualizar_acoes();
         desenhar();
