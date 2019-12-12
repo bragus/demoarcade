@@ -25,12 +25,13 @@ def Mostrar_home (request):
 
                 if user is not None:
                     context = {
-                        'nick' : "teste"                             
+                        'nickname' : "teste", 
+                        'pontuacao' : "pass"                           
                     }
-                    return render (request, 'game.html', context)
+                    #return render (request, 'game.html', context)
 
                     #return render (request, 'home.html', context)
-                    #return redirect("/game")  
+                    return redirect("/game")  
 
                 else:
                     context = {

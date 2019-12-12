@@ -1,6 +1,7 @@
 
 let inicio_canvas_x, inicio_canvas_y, canvas_altura, canvas_largura;
-let canvas, ctx, escala_jogo, end_game;
+let canvas, ctx, escala_jogo, escala_velocidade, end_game;
+let nickname;
 
 game = {
 
@@ -14,7 +15,8 @@ game = {
     start : function(){
         
         redimencionarJanela();
-        escala_jogo = canvas_altura / 1000;  //Math.max(canvas_largura / 1000, canvas_altura / 1000);
+        escala_jogo = canvas_altura / 1000;
+        escala_velocidade = escala_jogo;  //Math.max(canvas_largura / 1000, canvas_altura / 1000);
         end_game = false;
 
         fundo.start();
@@ -73,9 +75,9 @@ fundo = {
     update : function(){
 
         let velocidade_atual = this.velocidade - (player.velocidade_x/8);
-        this.x -= (velocidade_atual * escala_jogo);
+        this.x -= (velocidade_atual * escala_velocidade);
         if(this.x <= -this.largura){
-            this.x = -(velocidade_atual * escala_jogo);
+            this.x = -(velocidade_atual * escala_velocidade);
         }
         this.sprite.atualizar_posicao(this.x, this.y);
 
@@ -120,7 +122,7 @@ player = {
         
         this.largura = this.largura * escala_jogo;
         this.altura = this.altura * escala_jogo;
-        this.velocidade = this.velocidade * escala_jogo;
+        this.velocidade = this.velocidade * escala_velocidade;
 
         this.y = canvas_altura/2;
         this.vida = 6;  
@@ -277,15 +279,15 @@ C_Tiros = { //controlador de tiros do player
     listTiros: [],
     tempo_inserir: 30,
     config_tempo_inserir: 10,
-    velocidade_tiro: 10,
+    velocidade_tiro: 12,
     atirar: false,
 
     insere: function(){
 
         let x = player.x + player.largura/2;
         let y = player.y + player.altura/2;
-        let largura = 30;
-        let altura = 8;
+        let largura = 35;
+        let altura = 10;
 
         largura = largura * escala_jogo;
         altura = altura * escala_jogo;
@@ -294,7 +296,7 @@ C_Tiros = { //controlador de tiros do player
         img.src = url_tiro_player;
         let sprite = new Sprite(img, x, y, largura, altura);
 
-        let velocidade = this.velocidade_tiro * escala_jogo;
+        let velocidade = this.velocidade_tiro * escala_velocidade;
 
         this.listTiros.push({
             x: x,
@@ -485,8 +487,8 @@ C_Asteroides = {
         let largura = 30;
         let altura = 60;
 
-        velocidade_x = velocidade_x * escala_jogo;
-        velocidade_y = velocidade_y * escala_jogo;
+        velocidade_x = velocidade_x * escala_velocidade;
+        velocidade_y = velocidade_y * escala_velocidade;
 
         largura = largura * escala_jogo;
         altura = altura * escala_jogo;
@@ -607,8 +609,8 @@ C_Inimigos = {
 
     listNav: [],
     pos_tela: [1, 2, 3], //1 = nav vindo de cima para baixo, 2 = vindo do meio, 3 = de baixo para cima
-    tempo_inserir: 100,
-    config_tempo_inserir: 100,
+    tempo_inserir: 1000,
+    config_tempo_inserir: 300,
 
     insere: function(){
 
@@ -731,10 +733,10 @@ class Inimigo{
 
         this.cor = "#fff";
         this.sprite = null;   
-        this.vida = 8;
+        this.vida = 7;
         this.velocidade = 4;
 
-        this.velocidade = this.velocidade * escala_jogo;
+        this.velocidade = this.velocidade * escala_velocidade;
 
         this.c_tiros = null;
     }
@@ -833,18 +835,17 @@ class Tiros_inimigo{
         this.x = 0;
         this.y = 0;
         this.largura = 20;
-        this.altura = 5;
+        this.altura = 7;
 
         this.largura = this.largura * escala_jogo;
         this.altura = this.altura * escala_jogo;
 
         this.listTiros = [];
-        this.cores = ["#ffbc1c", "#ff1c1c", "#ff85e1"];
-        this.tempo_inserir = 100;
-        this.config_tempo_inserir = 60;
+        this.tempo_inserir = 150;
+        this.config_tempo_inserir = 90;
         this.velocidade_tiro = 10;
 
-        this.velocidade_tiro = this.velocidade_tiro * escala_jogo;
+        this.velocidade_tiro = this.velocidade_tiro * escala_velocidade;
 
         this.atirar = true;
        
@@ -1087,7 +1088,7 @@ C_Itens = {
     altura: 50,
     largura: 50,
     sprite: null,
-    config_tempo_inserir: 1000,
+    config_tempo_inserir: 700,
     tempo_inserir: 1000,
     tipo_bonus: 0,
     velocidade: 15,
@@ -1096,8 +1097,8 @@ C_Itens = {
 
         this.x = canvas_largura;
         this.y = Math.floor(canvas_altura * Math.random());
-        this.largura = this.largura * escala_jogo;
-        this.altura = this.altura * escala_jogo;
+        let largura = this.largura * escala_jogo;
+        let altura = this.altura * escala_jogo;
         this.velocidade = this.velocidade * escala_jogo;
 
         let img = new Image();
@@ -1110,7 +1111,7 @@ C_Itens = {
         else{ //  tiro X
             img.src = url_tiro_power;
         }        
-        this.sprite = new Sprite(img, this.x, this.y, this.largura, this.altura);
+        this.sprite = new Sprite(img, this.x, this.y, largura, altura);
 
         this.tempo_inserir = this.config_tempo_inserir;
     },
@@ -1153,7 +1154,7 @@ C_Itens = {
         this.altura = 50;
         this.largura = 50;
         this.sprite = null;
-        this.config_tempo_inserir = 1000;
+        this.config_tempo_inserir = 700;
         this.tempo_inserir = 1000;
         this.tipo_bonus = 0;
         this.velocidade = 15;
@@ -1231,7 +1232,9 @@ function main(){ //Inicializa o jogo
     document.addEventListener("touchend", touchEnd);
     window.addEventListener("mousemove", getMousePos);
     window.addEventListener("resize", redimencionarJanela);
-    
+
+    nickname = document.getElementById("corpo_pagina").getAttribute("nickname");
+
     game.start();
 
     update();
@@ -1247,6 +1250,10 @@ function restart(){
 
 function update(){ //Função chamada a cada frame do jogo
     if(end_game != true){
+
+        if((escala_jogo) >= escala_velocidade/2.5)
+            escala_velocidade += escala_velocidade/20000;
+
         atualizar_acoes();
         desenhar();
     }

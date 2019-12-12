@@ -2,12 +2,21 @@ from django.shortcuts import render
 
 def Mostrar_game(request):
 
-    nome = request.POST.get('nick')
-    print(nome)
+    # nome = request.POST.get('nickname')
+    # pontuacao = request.POST.get('pontuacao')
+
+    # if nome == None:
+    #     context = {
+    #         'anonimo' : True    
+    #     }
+    # else:        
+    #     context = {
+    #         'nickname' : nome,
+    #         'pontuacao' : pontuacao,     
+    #     }
 
     context = {
-        'player' : "teste usuario",
-        'msg' : "Você foi logado com sucesso!"        
+        'nickname' : "Everlen",
     }
 
     return render(request, "game.html", context)
