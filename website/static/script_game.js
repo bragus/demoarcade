@@ -23,6 +23,7 @@ game = {
         player.start();
         score.start();
         vida.start();
+        C_Itens.start();
 
         // this.myMusic = document.createElement("audio");
         // this.myMusic.src = url_sound_music;
@@ -1102,13 +1103,16 @@ C_Itens = {
     tipo_bonus: 0,
     velocidade: 10,
 
+    start : function(){
+        this.largura = this.largura * escala_jogo;
+        this.altura = this.altura * escala_jogo;
+        this.velocidade = this.velocidade * escala_jogo;
+    },
+
     insere : function(){
 
         this.x = canvas_largura;
-        this.y = Math.floor(canvas_altura * Math.random());
-        let largura = this.largura * escala_jogo;
-        let altura = this.altura * escala_jogo;
-        this.velocidade = this.velocidade * escala_velocidade;
+        this.y = Math.floor(canvas_altura * Math.random());       
 
         let img = new Image();
         this.tipo_bonus = Math.floor(3 * Math.random());
@@ -1120,7 +1124,7 @@ C_Itens = {
         else{ //  tiro X
             img.src = url_tiro_power;
         }        
-        this.sprite = new Sprite(img, this.x, this.y, largura, altura);
+        this.sprite = new Sprite(img, this.x, this.y, this.largura, this.altura);
 
         this.tempo_inserir = this.config_tempo_inserir;
     },
