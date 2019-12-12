@@ -84,12 +84,12 @@ def Mostrar_game(request):
     
     #form = playerForm(request.POST or None)
 
-    nickname_js = request.POST.get('nickname_js')
+    # //nickname_js = request.POST.get('nickname_js')
 
-    if nickname_js != None:
-        #nickname_js = form.cleaned_data['nickname_js']
-        print(nickname_js)
-        return render(request, "home.html")
+    # if nickname_js != None:
+    #     #nickname_js = form.cleaned_data['nickname_js']
+    #     print(nickname_js)
+    #     return render(request, "home.html")
         
         # print(nickname)
         # print(recorde)

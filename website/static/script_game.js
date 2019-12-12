@@ -1248,7 +1248,7 @@ function main(){ //Inicializa o jogo
     if(nickname == "")
         nickname = "Anonimus";
 
-    enviar();
+    //enviar();
 
     game.start();
 
