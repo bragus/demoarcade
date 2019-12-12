@@ -11,8 +11,8 @@
 {% for item in list_ranking %}
     <div class="container_rank">
     <div class = "div_item_rank">
-        <p> {{ item.player.nickname }}</p>
-        <p> {{ item.pontuacao }} </p>
+        <p class = "item_rank_esquerda"> {{ item.player.nickname }}</p>
+        <p class = "item_rank_direita"> {{ item.pontuacao }} </p>
     </div>
 </div>
 {% endfor %}

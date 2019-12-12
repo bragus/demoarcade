@@ -7,7 +7,7 @@ from django.contrib.auth import authenticate, login
 
 def Mostrar_home (request):
     form = playerForm(request.POST or None)
-    list_ranking = pontuacao.objects.filter()
+    list_ranking = pontuacao.objects.filter().order_by('pontuacao').reverse()
 
     if request.POST:
         if form.is_valid(): #Cadastro
@@ -69,7 +69,7 @@ def Mostrar_instrucoes (request):
 
 def Mostrar_ranking (request):
 
-    list_ranking = pontuacao.objects.filter()
+    list_ranking = pontuacao.objects.filter().order_by('pontuacao').reverse()
 
     contexto = {        
         "list_ranking": list_ranking,
