@@ -3,70 +3,41 @@
 
 {% block content %}
 
+
 <div id="sobre">
-     <h1>Sobre</h1>
+    <img src={% static 'Img_template/sobre.png' %} alt="sobre">
 </div>
 
-<div id="descricao">
-    <p>Demoarcade é um jogo desenvolvido em JavaScript e HTML no melhor estilo arcade. <br> As pessoas envolvidas no projeto foram:</p>
-</div>
 
 <div class="grupo">
 
-    <section class="dev"> 
-        <h2 class="nomedev">Alex</h2>
-        <img src="{% static 'Img_template/alex.jpg' %}" alt="foto do Alex">
-        <p>Contato: blalbalba@blabla.com.br <br>
-           Linkedin:
-           
-               
-    
-        </p> 
-    </section>
+
 
     <section class="dev"> 
-        <h2 class="nomedev">Douglas</h2>
-        <img src="{% static 'Img_template/douglas.jpg' %}" alt="foto do Douglas">
-        <p>Contato: douglasyhirata@gmail.com <br>
-        Linkedin:
-
-    </section>
-
-    <section class="dev"> 
-        <h2 class="nomedev">Gustavo</h2>
         <img src="{% static 'Img_template/gustavo.jpg' %}" alt="foto do Gustavo">
-        <p>Contato: blalbalba@blabla.com.br <br>
-        Linkedin:
+        <h2 class="nomedev">Gus</h2>
+        <p>gusalmeidabraga@gmail.com</p>
+        <a href="https://www.linkedin.com/in/gustavobrag/">
+            <img src={% static 'img_template/linkedinicon.png' %} alt="">
+        </a>
+        <a href="https://github.com/bragus">
+            <img src={% static 'img_template/githubicon.png' %} alt="">
+        </a>
+    </section>
+
+    <section class="dev"> 
+        <img src="{% static 'Img_template/tony.jpg' %}" alt="foto do Tony">
+        <h2 class="nomedev">Tony</h2>
+        <p>victor.everlen@gmail.com</p>
+        <a href="https://www.linkedin.com/in/everlen-victor">
+            <img src={% static 'img_template/linkedinicon.png' %} alt="">
+        </a>
+        <a href="https://github.com/everlen">
+            <img src={% static 'img_template/githubicon.png' %} alt="">
+        </a>
     </section>
 
 
 </div>   
-
-<div class="grupo">
-
-    <section class="dev">
-        <h2 class="nomedev">Jovenel</h2>
-        <img src="{% static 'Img_template/jovenel.jpg' %}" alt="foto do Jovenel">
-        <p>Contato: blalbalba@blabla.com.br <br>
-        Linkedin:
-    </section>
-
-    <section class="dev">
-        <h2 class="nomedev">Tony</h2>
-        <img src="{% static 'Img_template/tony.jpg' %}" alt="foto do Tony">
-        <p>Contato: blalbalba@blabla.com.br <br>
-        Linkedin:
-    </section>
-
-    <section class="dev">
-        <h2 class="nomedev">Xico</h2>
-        <img src="{% static 'Img_template/xico.jpg' %}" alt="foto do Xico">
-        <p>Contato: davi.jrr.95@gmail.com <br>
-        <a href="https://www.linkedin.com/in/francisco-david-031403b0">Linkedin</a>
-    </section>
-
-
-</div>
-
 
 {% endblock %} 

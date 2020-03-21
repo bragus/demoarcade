@@ -88,7 +88,7 @@ nav {
 .home_icons{
     align-items: top;
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-around;
     text-decoration: none;
 }
 
@@ -307,7 +307,7 @@ button{
 .textodir{
     align-items: center;
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-around;
 }
 
 .textodir p{
@@ -323,7 +323,7 @@ button{
 .textoesq{
     align-items: center;
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-around;
 }
 
 .textoesq p{
@@ -338,24 +338,16 @@ button{
     width: 25vw;
 }
 
-
-/* =========== FONTE ============ */
-
-@font-face {
-    font-family: "demoArcade";
-    src: url(fonts/FSEX300.ttf)
-}
-
 /* ============== SOBRE =========== */
 
 #sobre{
     display: flex;
-    color: purple; 
-    font-family: "demoArcade";
-    font-size: 3.0vw;
     justify-content: center;
     margin-top: 15vh;
+}
 
+#sobre img{
+    width: 13vw;
 }
 
 #descricao{
@@ -386,6 +378,17 @@ button{
     width: 15vw;
 }
 
+.dev a img{
+    width: 5vw;
+}
+
+.dev a img:hover{
+    filter: brightness(150%) saturate(130%);
+    transition: all 150ms linear;
+    cursor: pointer;
+}
+
+/* =========== RANKING ===========*/
 .titulo_ranking{
     align-items: center;
     color : white;
@@ -436,3 +439,12 @@ button{
 .item_rank_direita{
     padding-right: 0px;
 }
+
+/* =========== FONTE ============ */
+
+@font-face {
+    font-family: "demoArcade";
+    src: url(fonts/FSEX300.ttf)
+}
+
+
