@@ -8,3 +8,5 @@ webgame/__pycache__
 website/__pycache__
 __pycache__
 .vscode
+
+website/static/Sound_fx
